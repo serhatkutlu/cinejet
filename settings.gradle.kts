@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
 
     repositories {
         google {
@@ -22,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "cinejet"
 include(":app")
- 
+include(":core:common")
