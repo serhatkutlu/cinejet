@@ -13,9 +13,8 @@ class RetrofitConventionPlugin : Plugin<Project> {
             dependencies {
                 "api"(libs.findLibrary("retrofit").get())
                 "api"(libs.findLibrary("kotlinx.serialization.json").get())
+                "api"(libs.findLibrary("okhttp.logging").get())
                 "implementation"(libs.findLibrary("retrofit2.kotlinx.serialization.converter").get())
-                "debugImplementation"(libs.findLibrary("chucker").get())
-                "releaseImplementation"(libs.findLibrary("chucker.noop").get())
                 "implementation"(libs.findLibrary("okhttp").get())
 
             }
