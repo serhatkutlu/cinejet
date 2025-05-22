@@ -1,15 +1,13 @@
 package com.msk.common.util
 
 
-sealed interface MediaType {
-    enum class Movie(val mediaType: String) : MediaType {
-        Upcoming(UpcomingMediaType),
-        TopRated(TopRatedMediaType),
-        Popular(PopularMediaType),
-        NowPlaying(NowPlayingMediaType),
-        Discover(DiscoverMediaType),
-        Trending(TrendingMediaType);
-    }
+enum class MediaType(val mediaType: String) {
+    Upcoming(UpcomingMediaType),
+    TopRated(TopRatedMediaType),
+    Popular(PopularMediaType),
+    NowPlaying(NowPlayingMediaType),
+    Discover(DiscoverMediaType),
+    Trending(TrendingMediaType);
 }
 
 private const val UpcomingMediaType = "upcoming"

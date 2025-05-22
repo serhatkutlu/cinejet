@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Singleton
 
+@Singleton
 internal class RemoteFactory @Inject constructor() {
     fun createRetrofit(
         url: String,

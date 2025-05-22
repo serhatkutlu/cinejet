@@ -2,21 +2,21 @@
 agp = "8.7.3"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.1.0"
-coreKtx = "1.13.0"
-kotlinxCoroutinesCore = "1.8.1-Beta"
-kotlinxSerializationCoreJvm = "1.6.3"
-activityCompose = "1.9.0"
-composeBom = "2024.04.01"
+coreKtx = "1.16.0"
+kotlinxCoroutinesCore = "1.9.0"
+kotlinxSerializationCoreJvm = "1.7.3"
+activityCompose = "1.10.1"
+composeBom = "2025.05.00"
 jetbrainsKotlinJvm = "1.9.23"
-hilt = "2.51.1"
+hilt = "2.54"
 ksp = "2.1.0-1.0.29"
-androidxLifecycle = "2.7.0"
-navigationCompose = "2.7.7"
-pagingRuntimeKtx = "3.2.1"
-pagingCompose = "3.3.0-beta01"
+androidxLifecycle = "2.9.0"
+navigationCompose = "2.9.0"
+pagingRuntimeKtx = "3.3.6"
+pagingCompose = "3.3.6"
 retrofit = "2.11.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
-kotlinxSerializationJson = "1.6.3"
+kotlinxSerializationJson = "1.7.3"
 detekt = "1.23.6"
 coil = "2.6.0"
 junit = "4.13.2"
@@ -24,8 +24,9 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
-chucker = "3.5.2"
 okhttp = "4.12.0"
+androidx-room = "2.7.1"
+
 
 
 
@@ -59,6 +60,13 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version = "1" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
+#Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidx-room" }
+
+
 #Paging3
 androidx-paging3 = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 kotlinx-paging3Common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingRuntimeKtx" }
@@ -83,10 +91,6 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 kotlinx-serialization-core-jvm = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core-jvm", version.ref = "kotlinxSerializationCoreJvm" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
-
-#Chucker
-chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
-chucker-noop = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
 
 #Detekt
 detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
@@ -126,6 +130,7 @@ cinejet-android-ui={id="cinejet.android.ui"}
 cinejet-android-library={id="cinejet.android.library"}
 cinejet-android-library-compose = { id = "cinejet.android.library.compose" }
 cinejet-hilt = { id = "cinejet.hilt" }
+cinejet-room-library={id = "cinejet.room"}
 cinejet-retrofit = { id = "cinejet.retrofit" }
 cinejet-detekt = { id = "cinejet.detekt" }
 cinejet-jvm-library = { id = "cinejet.jvm.library" }
