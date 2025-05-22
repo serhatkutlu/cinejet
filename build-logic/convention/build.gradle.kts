@@ -54,6 +54,10 @@ gradlePlugin {
             id = libs.plugins.cinejet.hilt.get().pluginId
             implementationClass = "com.msk.HiltConventionPlugin"
         }
+        register("room") {
+            id = libs.plugins.cinejet.room.library.get().pluginId
+            implementationClass = "com.msk.RoomConventionPlugin"
+        }
 
         register("jvmLibrary") {
             id = libs.plugins.cinejet.jvm.library.get().pluginId

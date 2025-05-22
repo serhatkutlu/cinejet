@@ -1,9 +1,11 @@
 package com.msk
 
 import com.android.build.gradle.LibraryExtension
+import com.msk.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -25,7 +27,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     sourceCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
                     targetCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
                 }
+
+                dependencies {
+                    "testImplementation"(libs.findLibrary("junit").get())
+                    "androidTestImplementation"(libs.findLibrary("androidx-junit").get())
+                    "androidTestImplementation"(libs.findLibrary("androidx-espresso-core").get())
+                }
+
             }
+
         }
     }
 }
