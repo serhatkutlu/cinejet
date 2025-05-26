@@ -69,7 +69,7 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "an
 
 #Paging3
 androidx-paging3 = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
-kotlinx-paging3Common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingRuntimeKtx" }
+androidx-paging3Common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingRuntimeKtx" }
 androidx-paging3Compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
 
 #Coroutine
