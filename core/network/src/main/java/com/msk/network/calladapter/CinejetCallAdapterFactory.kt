@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class CinejetCallAdapterFactory: CallAdapter.Factory() {
+internal class CinejetCallAdapterFactory: CallAdapter.Factory() {
     override fun get(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
 
         if (getRawType(type) != NetworkResult::class.java) return null

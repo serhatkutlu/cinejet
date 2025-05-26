@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CinejetCall <T>(proxy: Call<T>): CallDelegate<T, NetworkResult<T>>(proxy){
+internal class CinejetCall <T>(proxy: Call<T>): CallDelegate<T, NetworkResult<T>>(proxy){
     override fun enqueueImpl(callback: Callback<NetworkResult<T>>) {
         proxy.enqueue(object :Callback<T>{
             override fun onResponse(call: Call<T>, response: Response<T>) {

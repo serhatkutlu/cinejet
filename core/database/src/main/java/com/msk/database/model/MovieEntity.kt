@@ -10,7 +10,7 @@ import com.msk.database.util.Constants
 data class MovieEntity(
     @PrimaryKey
     @ColumnInfo(name = Constants.Columns.ID)
-    val id: Int=0,
+    val id: Int = 0,
 
     @ColumnInfo(name = Constants.Columns.MEDIA_TYPE)
     val mediaType: MediaType,
@@ -31,6 +31,9 @@ data class MovieEntity(
     val backdropPath: String?,
 
     @ColumnInfo(name = Constants.Columns.RELEASE_DATE)
-    val releaseDate: String
+    val releaseDate: String,
+
+    @ColumnInfo(name = Constants.Columns.LAST_FETCHED_TIME)
+    val lastFetchedTime: Long = System.currentTimeMillis()
 )
 

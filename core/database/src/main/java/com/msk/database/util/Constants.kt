@@ -45,6 +45,7 @@ internal object Constants {
         const val CHARACTER = "character"
         const val ORDER = "order"
         const val ORIGINAL_NAME = "original_name"
+        const val LAST_FETCHED_TIME = "last_fetched_time"
 
 
 

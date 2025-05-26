@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
- abstract class CallDelegate<In, Out>(protected val proxy: Call<In>) : Call<Out> {
+ internal abstract class CallDelegate<In, Out>(protected val proxy: Call<In>) : Call<Out> {
     abstract fun enqueueImpl(callback: Callback<Out>)
     abstract fun cloneImpl(): Call<Out>
     override fun timeout(): Timeout = proxy.timeout()

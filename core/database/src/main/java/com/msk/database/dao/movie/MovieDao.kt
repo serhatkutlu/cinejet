@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.msk.common.util.MediaType
 import com.msk.database.model.MovieEntity
 import com.msk.database.util.Constants.Tables.MOVIE_TABLE_NAME
@@ -24,4 +25,6 @@ interface MovieDao {
 
     @Query("DELETE FROM $MOVIE_TABLE_NAME WHERE mediaType = :mediaType")
     suspend fun deleteMoviesByMediaType(mediaType: MediaType)
+
+
 }

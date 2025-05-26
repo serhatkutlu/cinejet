@@ -1,6 +1,7 @@
 package com.msk.database
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.msk.database.dao.movie.MovieDao
 import com.msk.database.dao.movie.MovieDetailDao
@@ -13,7 +14,7 @@ import com.msk.database.typeconverter.MovieDetailTypeConverter
 
 @Database(entities = [MovieEntity::class, MovieRemoteKeyEntity::class], version = 1, exportSchema = false)
 @TypeConverters(MediaTypeConverter::class, MovieDetailTypeConverter::class)
-abstract class CinejetDatabase {
+abstract class CinejetDatabase :RoomDatabase(){
     abstract val movieDao: MovieDao
     abstract val MovieDetailDao: MovieDetailDao
    abstract val movieRemoteKeyDao: MovieRemoteKeyDao
