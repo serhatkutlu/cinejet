@@ -30,3 +30,5 @@ include(":core:model")
 include(":features:home:data")
 include(":features:home:domain")
 
+include(":core:design-system")
+include(":features:home:ui")
