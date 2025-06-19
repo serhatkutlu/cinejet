@@ -11,7 +11,7 @@ import com.msk.data.datasource.MovieHomeDataSource
 import com.msk.data.mapper.toDomainModel
 import com.msk.data.mapper.toEntity
 import com.msk.data.paging.MovieRemoteMediator
-import com.msk.data.util.Constants.DEFAULT_PAGE_SIZE
+import com.msk.common.util.Constants.DEFAULT_MAX_PAGE_SIZE
 import com.msk.database.datasource.LocalMovieDataSource
 import com.msk.domain.repository.MovieHomeRepository
 import com.msk.model.Movie
@@ -25,11 +25,11 @@ class MovieHomeRepositoryImpl @Inject constructor (
     private val networkDataSource: MovieHomeDataSource,
     ): MovieHomeRepository {
 
-    override suspend fun loadMoviesByMediaType(mediaType: MediaType): Flow<Resource<List<Movie>>> =
+    override  fun loadMoviesByMediaType(mediaType: MediaType,maxPage:Int): Flow<Resource<List<Movie>>> =
         networkBoundResource(
-            query = { databaseDataSource.getByMediaType(mediaType,DEFAULT_PAGE_SIZE)
+            query = { databaseDataSource.getByMediaType(mediaType,maxPage)
                 .map { it -> it.map { it.toDomainModel() } } },
-            fetch = { networkDataSource.fetchMovie(mediaType,DEFAULT_PAGE_SIZE) },
+            fetch = { networkDataSource.fetchMovie(mediaType,maxPage) },
             shouldFetch = { it.isEmpty() || isDataStale(it.first()) },
             saveFetchResult = { result->
                 databaseDataSource.deleteByMediaTypeAndInsertMovies(mediaType,result.results.map { it.toEntity(mediaType) })}
@@ -38,7 +38,7 @@ class MovieHomeRepositoryImpl @Inject constructor (
 
     @OptIn(ExperimentalPagingApi::class)
     override  fun loadMoviesByMediaTypePaging(mediaType: MediaType) =Pager(
-        config = PagingConfig(DEFAULT_PAGE_SIZE, enablePlaceholders = false),
+        config = PagingConfig(DEFAULT_MAX_PAGE_SIZE, enablePlaceholders = false),
         remoteMediator = MovieRemoteMediator(networkDataSource, databaseDataSource, mediaType),
         pagingSourceFactory = { databaseDataSource.getPagingByMediaType(mediaType) }
 

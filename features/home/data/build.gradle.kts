@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.msk.features:home:data"
+    namespace = "com.msk.features.home.data"
 }
 
 dependencies {

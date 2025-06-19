@@ -21,14 +21,13 @@ inline fun <ResultType, RequestType> networkBoundResource(
     val data = query().first()
 
     if (shouldFetch(data)) {
-        emit(Resource.Loading)
 
         try {
 
             when(val networkResponse = fetch()){
                 is NetworkResult.Error -> {
                     onFetchFailed(Throwable(networkResponse.error.toString()))
-                    emitAll(query().map { Resource.Error(networkResponse.error, it) })
+                    emitAll(query().map { Resource.Error(networkResponse.error) })
                 }
                 is NetworkResult.Success -> {
                     saveFetchResult(networkResponse.data)
@@ -38,7 +37,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
 
         } catch (throwable: Throwable) {
             onFetchFailed(throwable)
-            emitAll(query().map { Resource.Error(ErrorCategory.fromThrowable(throwable), it) })
+            emitAll(query().map { Resource.Error(ErrorCategory.fromThrowable(throwable)) })
         }
     } else {
         emitAll(query().map { Resource.Success(it) })
