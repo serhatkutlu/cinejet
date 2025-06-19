@@ -1,6 +1,7 @@
 package com.msk.network.factory
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.msk.network.calladapter.CinejetCallAdapterFactory
 import com.msk.network.interceptor.AuthInterceptor
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -13,7 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 @Singleton
-internal class RemoteFactory @Inject constructor() {
+class RemoteFactory @Inject constructor() {
     fun createRetrofit(
         url: String,
         authInterceptor: AuthInterceptor,
@@ -29,6 +30,7 @@ internal class RemoteFactory @Inject constructor() {
             .baseUrl(url)
             .client(client)
             .addConverterFactory(defaultJson.asConverterFactory(mimeTypeJson))
+            .addCallAdapterFactory(CinejetCallAdapterFactory())
             .build()
     }
 
