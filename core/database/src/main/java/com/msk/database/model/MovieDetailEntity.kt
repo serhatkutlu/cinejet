@@ -73,5 +73,5 @@ val voteAverage: Double,
 val voteCount: Int,
 
 @ColumnInfo(name = Constants.Columns.CAST)
-val credits: Cast
+val cast: List<Cast>
 )

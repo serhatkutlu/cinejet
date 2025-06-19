@@ -2,8 +2,9 @@ package com.msk.database.util
 
 import androidx.room.withTransaction
 import com.msk.database.CinejetDatabase
+import javax.inject.Inject
 
-class RoomTransactionProvider(
+class RoomTransactionProvider @Inject constructor(
     private val database: CinejetDatabase
 )  {
 

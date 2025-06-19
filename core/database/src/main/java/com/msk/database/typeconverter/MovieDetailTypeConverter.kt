@@ -1,6 +1,7 @@
 package com.msk.database.typeconverter
 
 import androidx.room.TypeConverter
+import com.msk.database.model.Cast
 import com.msk.database.model.Genre
 import com.msk.database.model.ProductionCompany
 
@@ -27,5 +28,11 @@ class MovieDetailTypeConverter {
     fun toCompanies(value: String): List<ProductionCompany> =
         json.decodeFromString(ListSerializer(ProductionCompany.serializer()), value)
 
+    @TypeConverter
+    fun toCast(value: String): List<Cast> =
+        json.decodeFromString(ListSerializer(Cast.serializer()), value)
 
+    @TypeConverter
+    fun fromCast(value: List<Cast>): String =
+        json.encodeToString(ListSerializer(Cast.serializer()), value)
 }

@@ -10,7 +10,7 @@ internal object Constants {
     }
 
     object Database{
-        const val NAME="CinejetDatabase"
+        const val NAME="CineJetDatabase"
     }
     object Columns{
         const val ID="id"
