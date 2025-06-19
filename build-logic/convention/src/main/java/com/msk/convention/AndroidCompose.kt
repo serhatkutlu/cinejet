@@ -18,11 +18,14 @@ internal fun Project.configureAndroidCompose(
             "implementation"(libs.findLibrary("androidx-activity-compose").get())
             "androidTestImplementation"(platform(bom))
             "implementation"(libs.findLibrary("androidx-material3").get())
+            "implementation"(libs.findLibrary("androidx-navigation-compose").get())
             "implementation"(libs.findLibrary("androidx-ui-tooling-preview").get())
             "debugImplementation"(libs.findLibrary("androidx-ui-tooling").get())
             "testImplementation"(libs.findLibrary("junit").get())
             "androidTestImplementation"(libs.findLibrary("androidx-junit").get())
             "androidTestImplementation"(libs.findLibrary("androidx-espresso-core").get())
+            "implementation"(libs.findLibrary("kotlinx-coroutines-core").get())
+
 
         }
 

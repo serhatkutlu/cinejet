@@ -4,6 +4,7 @@ import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 
 
 class AndroidApplicationConventionPlugin: Plugin<Project> {
@@ -12,8 +13,6 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
             with(pluginManager){
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
-                apply("cinejet.detekt")
-
 
 
                 extensions.configure<ApplicationExtension> {
@@ -21,7 +20,11 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
 
                     defaultConfig {
                         minSdk = com.msk.convention.AppConfig.MIN_SDK
-                        targetSdk= com.msk.convention.AppConfig.TARGET_SDK
+                    }
+                    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
+                        kotlinOptions {
+                            jvmTarget =com.msk.convention.AppConfig.JAVA_VERSION.toString()
+                        }
                     }
 
 
@@ -29,8 +32,7 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
                         sourceCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
                         targetCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
                     }
-
-
+                    defaultConfig.targetSdk = com.msk.convention.AppConfig.TARGET_SDK
 
                 }
             }

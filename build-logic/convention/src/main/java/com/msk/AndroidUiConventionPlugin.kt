@@ -9,7 +9,7 @@ class AndroidUiConventionPlugin:Plugin<Project> {
     override fun apply(target: Project) {
         with(target){
             pluginManager.apply {
-               apply("cinejet.hilt")
+                apply("org.jetbrains.kotlin.plugin.serialization")
             }
 
             dependencies {
@@ -17,6 +17,8 @@ class AndroidUiConventionPlugin:Plugin<Project> {
                 "implementation"(libs.findLibrary("androidx.lifecycle.runtime.compose").get())
                "implementation"(libs.findLibrary("androidx.lifecycle.viewmodel.compose").get())
                "implementation"(libs.findLibrary("androidx.navigation.compose").get())
+                "implementation"(project(":core:design-system"))
+
             }
         }
     }

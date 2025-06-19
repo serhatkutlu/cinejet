@@ -18,15 +18,26 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 compileSdk = com.msk.convention.AppConfig.COMPILE_SDK
 
+
                 defaultConfig {
                     minSdk = com.msk.convention.AppConfig.MIN_SDK
-                    targetSdk = com.msk.convention.AppConfig.TARGET_SDK
+                }
+
+                tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
+                    kotlinOptions {
+                        jvmTarget =com.msk.convention.AppConfig.JAVA_VERSION.toString()
+                    }
                 }
 
                 compileOptions {
                     sourceCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
                     targetCompatibility = com.msk.convention.AppConfig.JAVA_VERSION
+
                 }
+
+
+
+                defaultConfig.targetSdk = com.msk.convention.AppConfig.TARGET_SDK
 
                 dependencies {
                     "testImplementation"(libs.findLibrary("junit").get())
