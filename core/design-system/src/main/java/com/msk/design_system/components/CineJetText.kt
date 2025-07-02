@@ -12,8 +12,8 @@ import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
 fun CineJetText(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.onBackground,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     overflow: TextOverflow = TextOverflow.Clip,

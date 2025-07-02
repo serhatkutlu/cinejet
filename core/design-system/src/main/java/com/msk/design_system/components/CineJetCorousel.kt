@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,10 +20,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.msk.common.util.getPosterUrl
+import com.msk.common.util.parseImageUrl
 import com.msk.design_system.extension.carouselTransition
 import com.msk.design_system.theme.LocalCineJetSpacing
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 
 
 @Composable
@@ -55,7 +54,7 @@ fun CineJetCarousel(
             AsyncImage(
                 modifier = Modifier
                     .fillMaxSize(),
-                model = getPosterUrl(movie.backdropPath) ,
+                model = movie.backdropPath?.parseImageUrl() ,
                 contentScale = ContentScale.FillBounds,
                 contentDescription = movie.title
             )
@@ -69,8 +68,10 @@ fun CineJetCarousel(
                             )
                         )
                 )
-            CineJetText(Modifier.align(Alignment.BottomStart).padding(LocalCineJetSpacing.current.medium),movie.title, style = MaterialTheme.typography.headlineSmall, color = Color.LightGray)
+            CineJetText(modifier=Modifier.align(Alignment.BottomStart).padding(LocalCineJetSpacing.current.medium), text = movie.title, style = MaterialTheme.typography.headlineSmall, color = Color.LightGray)
         }}
 
     }
 }
+
+

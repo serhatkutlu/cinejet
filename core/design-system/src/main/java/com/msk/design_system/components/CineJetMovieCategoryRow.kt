@@ -28,10 +28,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.msk.common.util.getPosterUrl
+import com.msk.common.util.parseImageUrl
 import com.msk.design_system.theme.LocalCineJetSpacing
 import com.msk.design_system.util.Constants.SEE_ALL_BUTTON_TEXT
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 
 @Composable
 fun CineJetMovieCategoryRow(
@@ -94,7 +94,7 @@ private fun MovieCard(movie: Movie, onClick: () -> Unit) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = getPosterUrl(movie.posterPath),
+                model = movie.posterPath?.parseImageUrl(),
                 contentScale = ContentScale.FillBounds,
                 contentDescription = movie.title
             )
@@ -110,10 +110,10 @@ private fun MovieCard(movie: Movie, onClick: () -> Unit) {
             ) {
 
                 CineJetText(
-                    Modifier
+                    modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(LocalCineJetSpacing.current.medium),
-                    movie.title,
+                    text = movie.title,
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.LightGray
                 )

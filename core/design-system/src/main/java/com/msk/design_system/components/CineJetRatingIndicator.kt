@@ -51,7 +51,7 @@ fun CineJetRatingIndicator(
             CineJetText(
                 text =ratingText,
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = Color.White,
             )
 
         }

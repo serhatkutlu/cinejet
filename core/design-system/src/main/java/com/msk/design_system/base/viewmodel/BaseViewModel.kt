@@ -28,4 +28,9 @@ abstract class BaseViewModel<State, Event, Effect>(initialState: State) : ViewMo
             _uiEffect.emit(builder())
         }
     }
+    fun launchInViewModel(block: suspend () -> Unit) {
+        viewModelScope.launch {
+            block()
+        }
+    }
 }
