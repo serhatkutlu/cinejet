@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.msk.cinejet.R
 import com.msk.design_system.navigation.Screen
 import com.msk.ui.navigation.Home
-import com.msk.ui.navigation.Search
 
 enum class CineJetTopLevelNavigation(
     val route: Screen,
@@ -31,7 +30,7 @@ enum class CineJetTopLevelNavigation(
     ),
 
     SearchScreen(
-        route = Search,
+        route = Home,
         title = R.string.search,
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search,

@@ -6,6 +6,6 @@ object AppConfig {
 
     const val TARGET_SDK = 35
     const val COMPILE_SDK = 35
-    const val MIN_SDK = 24
+    const val MIN_SDK = 26
     val JAVA_VERSION = JavaVersion.VERSION_17
 }

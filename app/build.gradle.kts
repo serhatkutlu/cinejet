@@ -14,8 +14,12 @@ android {
 dependencies {
     implementation(project(":features:home:ui"))
     implementation(project(":features:home:data"))
+
+    implementation(project(":features:detail:data"))
+    implementation(project(":features:detail:ui"))
     implementation(project(":core:common"))
     implementation(project(":core:database"))
     implementation(project(":core:design-system"))
+
 
 }

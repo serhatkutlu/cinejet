@@ -29,7 +29,6 @@ import com.msk.cinejet.ui.navigation.CineJetNavGraph
 import com.msk.cinejet.ui.navigation.CineJetNavigationRail
 import com.msk.cinejet.ui.navigation.CineJetNavigationWrapper
 import com.msk.cinejet.ui.navigation.CineJetTopLevelNavigation
-import com.msk.cinejet.ui.navigation.CinejetNavigationWrapper
 import com.msk.cinejet.ui.testScreen.DetailRoute
 import com.msk.cinejet.ui.testScreen.SeeAllRoute
 import com.msk.ui.HomeRoute
