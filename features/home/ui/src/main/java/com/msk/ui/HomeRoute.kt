@@ -1,5 +1,6 @@
 package com.msk.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -63,7 +64,8 @@ internal fun HomeScreen(
                             mediaType = mediaType.name,
                             onSeeAllClick = { onSeeAllClick(mediaType) },
                             movies = movieList,
-                            onMovieClick = { onMovieSelected(it.id) }
+                            onMovieClick = { onMovieSelected(it.id)
+                            }
                         )
                     }
                     Spacer(Modifier.height(LocalCineJetSpacing.current.large))

@@ -1,4 +1,4 @@
-package com.msk.data.repository
+package com.msk.feature.home.data.repository
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -6,15 +6,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.msk.common.util.MediaType
 import com.msk.common.util.Resource
-import com.msk.data.util.networkBoundResource
-import com.msk.data.datasource.MovieHomeDataSource
-import com.msk.data.mapper.toDomainModel
-import com.msk.data.mapper.toEntity
-import com.msk.data.paging.MovieRemoteMediator
+import com.msk.feature.home.data.util.networkBoundResource
+import com.msk.feature.home.data.datasource.MovieHomeDataSource
+import com.msk.feature.home.data.mapper.toDomainModel
+import com.msk.feature.home.data.mapper.toEntity
+import com.msk.feature.home.data.paging.MovieRemoteMediator
 import com.msk.common.util.Constants.DEFAULT_MAX_PAGE_SIZE
 import com.msk.database.datasource.LocalMovieDataSource
 import com.msk.domain.repository.MovieHomeRepository
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

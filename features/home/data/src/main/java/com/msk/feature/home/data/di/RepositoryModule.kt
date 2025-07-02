@@ -1,6 +1,6 @@
-package com.msk.data.di
+package com.msk.feature.home.data.di
 
-import com.msk.data.repository.MovieHomeRepositoryImpl
+import com.msk.feature.home.data.repository.MovieHomeRepositoryImpl
 import com.msk.domain.repository.MovieHomeRepository
 import dagger.Binds
 import dagger.Module

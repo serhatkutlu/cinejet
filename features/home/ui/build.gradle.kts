@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.msk.ui"
+    namespace = "com.msk.feature.home.ui"
 }
 dependencies{
     implementation(project(":features:home:domain"))

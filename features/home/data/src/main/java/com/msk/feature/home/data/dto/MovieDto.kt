@@ -1,9 +1,8 @@
-package com.msk.data.dto
+package com.msk.feature.home.data.dto
 
-import com.msk.data.util.Constants
+import com.msk.feature.home.data.util.Constants.Fields
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import com.msk.data.util.Constants.Fields
 
 
 @Serializable

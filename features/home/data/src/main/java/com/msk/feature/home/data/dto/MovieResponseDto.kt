@@ -1,6 +1,6 @@
-package com.msk.data.dto
+package com.msk.feature.home.data.dto
 
-import com.msk.data.util.Constants
+import com.msk.feature.home.data.util.Constants
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -8,11 +8,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MovieResponseDto(
     @SerialName(Constants.Fields.DATES)
-    val dates: DatesDto?,
+    val dates: com.msk.feature.home.data.dto.DatesDto?,
     @SerialName(Constants.Fields.PAGE)
     val page: Int,
     @SerialName(Constants.Fields.RESULTS)
-    val results: List<MovieDto>,
+    val results: List<com.msk.feature.home.data.dto.MovieDto>,
     @SerialName(Constants.Fields.TOTAL_PAGES)
     val totalPages: Int,
     @SerialName(Constants.Fields.TOTAL_RESULTS)

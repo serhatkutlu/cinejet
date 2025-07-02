@@ -3,7 +3,7 @@ package com.msk.domain.usecase
 import com.msk.common.util.MediaType
 import com.msk.common.util.Resource
 import com.msk.domain.repository.MovieHomeRepository
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

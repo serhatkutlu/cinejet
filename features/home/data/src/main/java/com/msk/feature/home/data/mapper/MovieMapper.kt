@@ -1,9 +1,9 @@
-package com.msk.data.mapper
+package com.msk.feature.home.data.mapper
 
 import com.msk.common.util.MediaType
-import com.msk.data.dto.MovieDto
+import com.msk.feature.home.data.dto.MovieDto
 import com.msk.database.model.MovieEntity
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 
 internal fun MovieDto.toEntity(mediaType: MediaType): MovieEntity {
     return MovieEntity(

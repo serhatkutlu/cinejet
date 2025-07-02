@@ -1,6 +1,6 @@
-package com.msk.data.di
+package com.msk.feature.home.data.di
 
-import com.msk.data.service.MovieService
+import com.msk.feature.home.data.service.MovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

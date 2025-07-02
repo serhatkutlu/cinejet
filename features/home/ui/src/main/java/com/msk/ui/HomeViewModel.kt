@@ -5,7 +5,7 @@ import com.msk.common.util.Constants
 import com.msk.common.util.MediaType
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.domain.usecase.GetHomeMoviesUseCase
-import com.msk.model.Movie
+import com.msk.model.home.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.flow.launchIn
@@ -66,9 +66,9 @@ import javax.inject.Inject
 }
 
  data class UiState(
-    val isLoading: Boolean = false,
-    val movies: Map<MediaType, List<Movie>?>?=null,
-    val error: String? = null
+     val isLoading: Boolean = false,
+     val movies: Map<MediaType, List<Movie>?>?=null,
+     val error: String? = null
 )
 
  sealed class UiEvent{

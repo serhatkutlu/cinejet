@@ -1,12 +1,12 @@
-package com.msk.data.paging
+package com.msk.feature.home.data.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.msk.common.util.MediaType
-import com.msk.data.datasource.MovieHomeDataSource
-import com.msk.data.mapper.toEntity
+import com.msk.feature.home.data.datasource.MovieHomeDataSource
+import com.msk.feature.home.data.mapper.toEntity
 import com.msk.database.datasource.LocalMovieDataSource
 import com.msk.database.model.MovieEntity
 import com.msk.database.model.MovieRemoteKeyEntity

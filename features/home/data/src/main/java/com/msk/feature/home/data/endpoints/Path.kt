@@ -1,4 +1,4 @@
-package com.msk.data.endpoints
+package com.msk.feature.home.data.endpoints
 
 internal object Path {
     internal const val UPCOMING_MOVIE = "movie/upcoming"
