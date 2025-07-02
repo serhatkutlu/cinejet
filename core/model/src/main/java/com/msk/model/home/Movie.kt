@@ -1,4 +1,4 @@
-package com.msk.model
+package com.msk.model.home
 
 import com.msk.common.util.MediaType
 
