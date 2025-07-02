@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_tab_detail">Detail</string>
+    <string name="detail_tab_videos">Videos</string>
+    <string name="detail_tab_reviews">Reviews</string>
+
+</resources>
