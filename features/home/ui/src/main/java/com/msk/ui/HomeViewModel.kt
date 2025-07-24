@@ -5,7 +5,7 @@ import com.msk.common.util.Constants
 import com.msk.common.util.MediaType
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.domain.usecase.GetHomeMoviesUseCase
-import com.msk.model.home.Movie
+import com.msk.model.common.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.flow.launchIn
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
- class HomeViewModel @Inject constructor(private val getHomeMoviesUseCase: GetHomeMoviesUseCase) :
+class HomeViewModel @Inject constructor(private val getHomeMoviesUseCase: GetHomeMoviesUseCase) :
     BaseViewModel<UiState, UiEvent, UiEffect>(UiState()) {
 
 
@@ -22,22 +22,22 @@ import javax.inject.Inject
         getMovies()
     }
 
-     override fun onEvent(event: UiEvent) {
+    override fun onEvent(event: UiEvent) {
 
         when (event) {
-           is UiEvent.ShowSnackBar -> {
-              setEffect { UiEffect.ShowSnackBar(event.message) }
-           }
+            is UiEvent.ShowSnackBar -> {
+                setEffect { UiEffect.ShowSnackBar(event.message) }
+            }
         }
     }
 
     private fun getMovies() {
-        val movieTypes = mapOf(
-            MediaType.TopRated to Constants.DEFAULT_MAX_PAGE_SIZE,
-            MediaType.Popular to Constants.DEFAULT_MAX_PAGE_SIZE,
-            MediaType.Upcoming to Constants.DEFAULT_MAX_PAGE_SIZE,
-            MediaType.NowPlaying to Constants.BANNER_MOVIE_PAGE_SIZE,
-            MediaType.Trending to Constants.DEFAULT_MAX_PAGE_SIZE,
+        val movieTypes = listOf(
+            MediaType.TopRated,
+            MediaType.Popular,
+            MediaType.Upcoming,
+            MediaType.NowPlaying,
+            MediaType.Trending,
         )
         getHomeMoviesUseCase.invoke(movieTypes).onEach { response ->
             when (response) {
@@ -65,17 +65,18 @@ import javax.inject.Inject
 
 }
 
- data class UiState(
-     val isLoading: Boolean = false,
-     val movies: Map<MediaType, List<Movie>?>?=null,
-     val error: String? = null
+data class UiState(
+    val isLoading: Boolean = false,
+    val movies: Map<MediaType, List<Movie>?>? = null,
+    val error: String? = null
 )
 
- sealed class UiEvent{
-    data class ShowSnackBar(val message:String):UiEvent()
+sealed class UiEvent {
+    data class ShowSnackBar(val message: String) : UiEvent()
 }
- sealed class UiEffect{
-    data class ShowSnackBar(val message: String):UiEffect()
+
+sealed class UiEffect {
+    data class ShowSnackBar(val message: String) : UiEffect()
 }
 
 

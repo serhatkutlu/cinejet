@@ -18,7 +18,7 @@ import com.msk.design_system.components.CineJetMovieCategoryRow
 import com.msk.design_system.theme.LocalCineJetSpacing
 
 @Composable
- fun HomeRoute(
+fun HomeRoute(
     modifier: Modifier,
     onMovieSelected: (Int) -> Unit,
     onSeeAllClick: (MediaType) -> Unit,
@@ -49,28 +49,34 @@ internal fun HomeScreen(
     uiState: UiState,
 ) {
     Spacer(Modifier.height(LocalCineJetSpacing.current.large))
-    LazyColumn (modifier) {
+    LazyColumn(modifier) {
         uiState.movies?.let { movies ->
 
-            movies.forEach{ (mediaType, movieList) ->
+            movies.forEach { (mediaType, movieList) ->
                 if (movieList == null) {
                     return@forEach
                 }
                 item {
                     if (mediaType == MediaType.TopRated) {
-                        CineJetCarousel(Modifier.fillMaxWidth().aspectRatio(16f/11f), list = movieList)
-                    }else{
+                        CineJetCarousel(
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 11f),
+                            list = movieList
+                        )
+                    } else {
                         CineJetMovieCategoryRow(
                             mediaType = mediaType.name,
                             onSeeAllClick = { onSeeAllClick(mediaType) },
                             movies = movieList,
-                            onMovieClick = { onMovieSelected(it.id)
+                            onMovieClick = {
+                                onMovieSelected(it.id)
                             }
                         )
                     }
                     Spacer(Modifier.height(LocalCineJetSpacing.current.large))
                 }
-                }
+            }
 
 
         }

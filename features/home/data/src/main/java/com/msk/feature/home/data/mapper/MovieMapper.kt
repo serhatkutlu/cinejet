@@ -1,13 +1,13 @@
 package com.msk.feature.home.data.mapper
 
 import com.msk.common.util.MediaType
-import com.msk.feature.home.data.dto.MovieDto
-import com.msk.database.model.MovieEntity
-import com.msk.model.home.Movie
+import com.msk.core.data.dto.MovieDto
+import com.msk.database.model.seeall.MovieEntity
+import com.msk.model.common.Movie
 
 internal fun MovieDto.toEntity(mediaType: MediaType): MovieEntity {
     return MovieEntity(
-        id = this.id,
+        networkId = this.id,
         mediaType = mediaType,
         title = this.title,
         overview = this.overview,
@@ -21,7 +21,7 @@ internal fun MovieDto.toEntity(mediaType: MediaType): MovieEntity {
 
 internal fun MovieEntity.toDomainModel(): Movie {
     return Movie(
-        id = this.id,
+        id = this.networkId,
         title = this.title,
         overview = this.overview,
         voteAverage = this.voteAverage,

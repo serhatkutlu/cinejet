@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+    implementation(project(":core:data"))
     implementation(project(":features:home:domain"))
     implementation(project(":core:database"))
     implementation(libs.androidx.paging3Common)
