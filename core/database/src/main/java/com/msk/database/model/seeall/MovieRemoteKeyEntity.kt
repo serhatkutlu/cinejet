@@ -1,4 +1,4 @@
-package com.msk.database.model
+package com.msk.database.model.seeall
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import com.msk.database.util.Constants
 
 @Entity(tableName = Constants.Tables.MOVIE_REMOTE_KEY)
 data class MovieRemoteKeyEntity(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey
     @ColumnInfo(name = Constants.Columns.ID)
     val id: Int,
 

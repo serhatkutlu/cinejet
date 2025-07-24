@@ -1,4 +1,4 @@
-package com.msk.database.model
+package com.msk.database.model.detail
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -21,8 +21,7 @@ val backdropPath: String?,
 @ColumnInfo(name = Constants.Columns.BUDGET)
 val budget: Int,
 
-@ColumnInfo(name = Constants.Columns.GENRES)
-val genres: List<Genre>,
+
 
 @ColumnInfo(name = Constants.Columns.HOMEPAGE)
 val homepage: String?,
@@ -71,7 +70,4 @@ val voteAverage: Double,
 
 @ColumnInfo(name = Constants.Columns.VOTE_COUNT)
 val voteCount: Int,
-
-@ColumnInfo(name = Constants.Columns.CAST)
-val cast: List<Cast>
 )

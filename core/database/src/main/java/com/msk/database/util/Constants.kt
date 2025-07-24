@@ -2,8 +2,11 @@ package com.msk.database.util
 
 internal object Constants {
 
+    const val DEFAULT_PAGE_SIZE=20
     object Tables {
         const val MOVIE_TABLE_NAME="Movie"
+        const val TRENDING_MOVIE_TABLE_NAME="Movie"
+        const val DISCOVER_MOVIE_TABLE_NAME="Movie"
         const val MOVIE_DETAIL_TABLE_NAME="MovieDetail"
         const val MOVIE_REMOTE_KEY="MovieRemoteKeys"
 

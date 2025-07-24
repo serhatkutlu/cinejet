@@ -19,7 +19,7 @@ abstract class BaseViewModel<State, Event, Effect>(initialState: State) : ViewMo
 
     abstract fun onEvent(event: Event)
 
-    protected fun setState(reducer: State.() -> State) {
+    protected fun updateState(reducer: State.() -> State) {
         _uiState.value = _uiState.value.reducer()
     }
 

@@ -1,4 +1,4 @@
-package com.msk.database.model
+package com.msk.database.model.seeall
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,9 +8,11 @@ import com.msk.database.util.Constants
 
 @Entity(tableName = Constants.Tables.MOVIE_TABLE_NAME)
 data class MovieEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Constants.Columns.ID)
     val id: Int = 0,
+
+    val networkId: Int,
 
     @ColumnInfo(name = Constants.Columns.MEDIA_TYPE)
     val mediaType: MediaType,
@@ -31,7 +33,7 @@ data class MovieEntity(
     val backdropPath: String?,
 
     @ColumnInfo(name = Constants.Columns.RELEASE_DATE)
-    val releaseDate: String,
+    val releaseDate: String?,
 
     @ColumnInfo(name = Constants.Columns.LAST_FETCHED_TIME)
     val lastFetchedTime: Long = System.currentTimeMillis()

@@ -1,13 +1,14 @@
-package com.msk.database.dao.movie
+package com.msk.database.dao.seeall
 
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.msk.common.util.MediaType
-import com.msk.database.model.MovieEntity
+import com.msk.database.model.seeall.MovieEntity
+import com.msk.database.util.Constants
 import com.msk.database.util.Constants.Tables.MOVIE_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +18,7 @@ interface MovieDao {
     @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE mediaType = :mediaType LIMIT :limit")
     fun getMoviesByMediaTypeLimited(mediaType: MediaType, limit: Int): Flow<List<MovieEntity>>
 
-    @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE mediaType = :mediaType")
+    @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE mediaType = :mediaType ")
     fun getPagingSourceByMediaType(mediaType: MediaType): PagingSource<Int, MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,6 +26,10 @@ interface MovieDao {
 
     @Query("DELETE FROM $MOVIE_TABLE_NAME WHERE mediaType = :mediaType")
     suspend fun deleteMoviesByMediaType(mediaType: MediaType)
+
+    @Query("SELECT * FROM $MOVIE_TABLE_NAME WHERE ${Constants.Columns.TITLE} LIKE '%' || :query || '%' ORDER BY ${Constants.Columns.LAST_FETCHED_TIME} DESC")
+    fun searchMovies(query: String):PagingSource<Int, MovieEntity>
+
 
 
 }

@@ -20,10 +20,10 @@ class RemoteFactory @Inject constructor() {
         authInterceptor: AuthInterceptor,
         isDebug: Boolean
     ): Retrofit {
-        val loggingInterceptor=provideLoggingInterceptor(isDebug)
+        val loggingInterceptor = provideLoggingInterceptor(isDebug)
         val client = makeOkHttpClient(
             authInterceptor = authInterceptor,
-            loggingInterceptor =loggingInterceptor
+            loggingInterceptor = loggingInterceptor
         )
 
         return Retrofit.Builder()
@@ -46,6 +46,7 @@ class RemoteFactory @Inject constructor() {
             .addInterceptor(authInterceptor)
         return builder.build()
     }
+
     private fun provideLoggingInterceptor(isDebug: Boolean): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = if (isDebug) {
@@ -55,13 +56,15 @@ class RemoteFactory @Inject constructor() {
             }
         }
     }
+
     private companion object {
         const val TIMEOUT = 10L
 
-         @OptIn(ExperimentalSerializationApi::class)
-         val defaultJson = Json {
+        val defaultJson = Json {
             ignoreUnknownKeys = true
             explicitNulls = false
+            coerceInputValues = true
+
         }
         val mimeTypeJson = "application/json".toMediaType()
     }

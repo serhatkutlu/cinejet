@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 import com.msk.common.util.parseImageUrl
 import com.msk.design_system.extension.carouselTransition
 import com.msk.design_system.theme.LocalCineJetSpacing
-import com.msk.model.home.Movie
+import com.msk.model.common.Movie
 
 
 @Composable

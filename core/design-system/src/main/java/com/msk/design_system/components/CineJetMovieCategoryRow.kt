@@ -31,7 +31,8 @@ import coil.compose.AsyncImage
 import com.msk.common.util.parseImageUrl
 import com.msk.design_system.theme.LocalCineJetSpacing
 import com.msk.design_system.util.Constants.SEE_ALL_BUTTON_TEXT
-import com.msk.model.home.Movie
+import com.msk.model.common.Movie
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun CineJetMovieCategoryRow(
@@ -73,7 +74,8 @@ fun CineJetMovieCategoryRow(
                 if (index == 0) {
                     Spacer(modifier = Modifier.height(LocalCineJetSpacing.current.medium))
                 }
-                MovieCard(movie = movies[index], onClick = { onMovieClick(movies[index]) })
+                MovieCard(movie = movies[index], onClick = {
+                    onMovieClick(movies[index]) })
             }
         }
     }
@@ -81,7 +83,7 @@ fun CineJetMovieCategoryRow(
 
 
 @Composable
-private fun MovieCard(movie: Movie, onClick: () -> Unit) {
+ fun MovieCard(movie: Movie, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .size(140.dp, 200.dp)
@@ -123,6 +125,58 @@ private fun MovieCard(movie: Movie, onClick: () -> Unit) {
             if (rating>0f){
                 CineJetRatingIndicator(
                     rating = movie.voteAverage.toFloat(),
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(LocalCineJetSpacing.current.small))
+            }
+
+        }
+
+    }
+}
+
+@Composable
+ fun MovieCard(title: String, posterPath: String?, voteAverage: Float, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .size(140.dp, 200.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable { onClick() }
+            ,
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = posterPath?.parseImageUrl(),
+                contentScale = ContentScale.FillBounds,
+                contentDescription = title
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.75f)),
+                            startY = 150f
+                        )
+                    )
+            ) {
+
+                CineJetText(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(LocalCineJetSpacing.current.medium),
+                    text = title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.LightGray
+                )
+
+            }
+            if (voteAverage > 0f){
+                CineJetRatingIndicator(
+                    rating = voteAverage,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(LocalCineJetSpacing.current.small))

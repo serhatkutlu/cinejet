@@ -1,6 +1,5 @@
 package com.msk.database.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.msk.database.CinejetDatabase
@@ -26,7 +25,7 @@ object DatabaseModule {
     fun provideMovieDao(database: CinejetDatabase) = database.movieDao
 
     @Provides
-    fun provideMovieDetailDao(database: CinejetDatabase) = database.MovieDetailDao
+    fun provideMovieDetailDao(database: CinejetDatabase) = database.movieDetailDao
 
     @Provides
     fun provideMovieRemoteKeyDao(database: CinejetDatabase) = database.movieRemoteKeyDao

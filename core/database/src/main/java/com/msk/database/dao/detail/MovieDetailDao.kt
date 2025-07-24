@@ -1,10 +1,10 @@
-package com.msk.database.dao.movie
+package com.msk.database.dao.detail
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.msk.database.model.MovieDetailEntity
+import com.msk.database.model.detail.MovieDetailEntity
 import com.msk.database.util.Constants.Tables.MOVIE_DETAIL_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 

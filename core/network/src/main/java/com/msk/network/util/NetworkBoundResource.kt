@@ -1,4 +1,4 @@
-package com.msk.feature.home.data.util
+package com.msk.network.util
 
 import com.msk.common.util.ErrorCategory
 import com.msk.common.util.Resource
