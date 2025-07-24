@@ -1,20 +1,21 @@
-package com.msk.feature.home.data.paging
+package com.msk.feature.seeall.data.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.msk.common.util.MediaType
-import com.msk.feature.home.data.datasource.MovieHomeDataSource
-import com.msk.feature.home.data.mapper.toEntity
+import com.msk.core.data.datasource.MovieRemoteDataSource
+
 import com.msk.database.datasource.LocalMovieDataSource
-import com.msk.database.model.MovieEntity
-import com.msk.database.model.MovieRemoteKeyEntity
+import com.msk.database.model.seeall.MovieEntity
+import com.msk.database.model.seeall.MovieRemoteKeyEntity
+import com.msk.feature.seeall.data.mapper.toEntity
 import com.msk.network.result.NetworkResult
 
 @OptIn(ExperimentalPagingApi::class)
 class MovieRemoteMediator(
-    private val movieService: MovieHomeDataSource,
+    private val movieService: MovieRemoteDataSource,
     private val database: LocalMovieDataSource,
     private val mediaType: MediaType
 ) : RemoteMediator<Int, MovieEntity>() {
@@ -26,7 +27,7 @@ class MovieRemoteMediator(
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.prevPage?.minus(1) ?: 1
+                remoteKeys?.nextPage?.minus(1) ?: 1
             }
 
             LoadType.PREPEND -> {
@@ -41,19 +42,19 @@ class MovieRemoteMediator(
         }
 
         return try {
+            page
             val response = movieService.fetchMovie(mediaType, page)
             when (response) {
-                is NetworkResult.Success -> {
+                    is NetworkResult.Success -> {
                     val movies = response.data.results.map { it.toEntity(mediaType) }
-                    val endOfPagination = movies.isEmpty()
+                    val endOfPagination = movies.isEmpty() || page >= response.data.totalPages
 
-
-                    val prevPage = if (page == 1) null else page - 1
+                    val prevPage = if (page <= 1) null else page - 1
                     val nextPage = if (endOfPagination) null else page + 1
 
                     val remoteKeys = movies.map { entity ->
                         MovieRemoteKeyEntity(
-                            id = entity.id,
+                            id = entity.networkId,
                             mediaType = mediaType,
                             prevPage = prevPage,
                             nextPage = nextPage
@@ -81,20 +82,26 @@ class MovieRemoteMediator(
     }
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieEntity>): MovieRemoteKeyEntity? {
-        return state.pages.lastOrNull { it.data.isNotEmpty() }
-            ?.data?.lastOrNull()
-            ?.let { movie -> database.getRemoteKeyByIdAndMediaType(movie.id, mediaType) }
+        return state.pages.lastOrNull {
+            it.data.isNotEmpty()
+        }?.data?.lastOrNull()?.let { entity ->
+
+            database.getRemoteKeyByIdAndMediaType(
+                id = entity.networkId,
+                mediaType = mediaType
+            )
+        }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MovieEntity>): MovieRemoteKeyEntity? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }
             ?.data?.firstOrNull()
-            ?.let { movie -> database.getRemoteKeyByIdAndMediaType(movie.id, mediaType) }
+            ?.let { movie -> database.getRemoteKeyByIdAndMediaType(movie.networkId, mediaType) }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MovieEntity>): MovieRemoteKeyEntity? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { id ->
+            state.closestItemToPosition(position)?.networkId?.let { id ->
                 database.getRemoteKeyByIdAndMediaType(id, mediaType)
             }
         }
