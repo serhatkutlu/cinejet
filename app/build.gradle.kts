@@ -17,6 +17,17 @@ dependencies {
 
     implementation(project(":features:detail:data"))
     implementation(project(":features:detail:ui"))
+
+    implementation(project(":features:see-all:data"))
+    implementation(project(":features:see-all:ui"))
+
+    implementation(project(":features:search:data"))
+    implementation(project(":features:search:ui"))
+
+    //implementation(project(":features:search:data"))
+    //implementation(project(":features:search:ui"))
+
+
     implementation(project(":core:common"))
     implementation(project(":core:database"))
     implementation(project(":core:design-system"))

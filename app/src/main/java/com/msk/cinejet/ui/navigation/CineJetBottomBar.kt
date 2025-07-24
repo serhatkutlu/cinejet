@@ -92,8 +92,9 @@ fun CineJetBottomBar(
                     }
                     .width(80.dp)
                     .fillMaxHeight(0.8f)
+                    .customBorder(radius = 16, color = MaterialTheme.colorScheme.onPrimary)
                     .clip(RoundedCornerShape(16.dp))
-                    .customBorder(radius = 16)
+
                     .background(MaterialTheme.colorScheme.primary)
                     .animateContentSize()
             )
@@ -123,7 +124,7 @@ fun CineJetBottomBar(
                         Icon(
                             imageVector = if (isSelected) navItem.selectedIcon else navItem.unselectedIcon,
                             contentDescription = navItem.route.route,
-                            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground,
+                            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.size(24.dp)
                         )
                         AnimatedVisibility(visible = isSelected) {

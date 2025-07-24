@@ -6,7 +6,13 @@ import androidx.navigation.compose.NavHost
 import com.msk.cinejet.ui.CineJetAppState
 import com.msk.feature.detail.ui.navigation.Detail
 import com.msk.ui.navigation.Home
-import com.msk.feature.detail.ui.navigation.detailScreen
+import com.msk.feature.detail.ui.navigation.detailGraph
+import com.msk.feature.search.ui.navigation.Search
+import com.msk.feature.search.ui.navigation.exploreGraph
+import com.msk.feature.search.ui.navigation.searchGraph
+import com.msk.feature.search.ui.navigation.searchFlow
+import com.msk.feature.seeall.ui.navigation.SeeAll
+import com.msk.feature.seeall.ui.navigation.seeAllNavGraph
 import com.msk.ui.navigation.homeGraph
 
 
@@ -15,12 +21,41 @@ fun CineJetNavGraph(
     modifier: Modifier = Modifier,
     appState: CineJetAppState,
 
-) {
+    ) {
+
     NavHost(appState.navController, startDestination = Home) {
-        homeGraph(onMovieSelected = {id->
+        homeGraph(onMovieSelected = { id ->
+            appState.navigate(Detail(id))
+        }, onSeeAllClick = { mediaType ->
+            appState.navigate(
+                SeeAll(mediaType)
+            )
+        })
+
+
+        detailGraph(navigateToDetail = { id ->
             appState.navigate(Detail(id))
         })
-        detailScreen()
+
+    seeAllNavGraph(
+        onMovieSelected = { id ->
+            appState.navigate(Detail(id))
+
+        }
+    )
+
+
+        searchFlow(
+            onMovieSelected = { id ->
+                appState.navigate(Detail(id))
+            },
+            onSeeAllClick = { appState.navigate(SeeAll(it)) },
+            onNavigateToSearch = { appState.navigate(Search) },
+            onBackClick = { appState.onBackClick()}
+        )
+
+
+
 //        composable(CineJetNavigationItem.SearchScreen.route.route) {
 //            Box(Modifier.fillMaxSize()){
 //                Text(text = "SearchScreen")
@@ -37,5 +72,5 @@ fun CineJetNavGraph(
 //            }
 //        }
 
-    }
+}
 }

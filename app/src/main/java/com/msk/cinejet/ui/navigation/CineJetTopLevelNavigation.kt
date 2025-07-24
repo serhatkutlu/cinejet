@@ -13,6 +13,8 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.msk.cinejet.R
 import com.msk.design_system.navigation.Screen
+import com.msk.feature.search.ui.navigation.Explore
+import com.msk.feature.search.ui.navigation.SearchFlow
 import com.msk.ui.navigation.Home
 
 enum class CineJetTopLevelNavigation(
@@ -30,7 +32,7 @@ enum class CineJetTopLevelNavigation(
     ),
 
     SearchScreen(
-        route = Home,
+        route = Explore,
         title = R.string.search,
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search,

@@ -43,6 +43,9 @@ class CineJetAppState(
 
         }
 
+    val isBottomBarVisible: Boolean
+        @Composable get() = currentTopLevelDestination != null
+
     fun showSnackBar(message: String) {
         coroutineScope.launch {
             snackBarHostState.showSnackbar(message)
@@ -69,4 +72,5 @@ class CineJetAppState(
 
         navController.navigate(route, options)
     }
+
 }

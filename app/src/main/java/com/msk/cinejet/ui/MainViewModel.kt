@@ -14,15 +14,15 @@ import javax.inject.Inject
     override fun onEvent(event: UiEvent) {
         when (event) {
             is UiEvent.OnAdaptiveInfoChanged -> {
-                setState {
+                updateState {
                     event.expandedScreenState
                 }
             }
 
-            is UiEvent.OnFirstMovieLoaded -> setState {
+            is UiEvent.OnFirstMovieLoaded -> updateState {
                 ExpandedScreenState.Detail(event.movieId)
             }
-            is UiEvent.OnSeeAllClicked -> setState {
+            is UiEvent.OnSeeAllClicked -> updateState {
                 ExpandedScreenState.SeeAll(event.mediaType)
             }
         }

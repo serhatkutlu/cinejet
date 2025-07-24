@@ -29,8 +29,6 @@ import com.msk.cinejet.ui.navigation.CineJetNavGraph
 import com.msk.cinejet.ui.navigation.CineJetNavigationRail
 import com.msk.cinejet.ui.navigation.CineJetNavigationWrapper
 import com.msk.cinejet.ui.navigation.CineJetTopLevelNavigation
-import com.msk.cinejet.ui.testScreen.DetailRoute
-import com.msk.cinejet.ui.testScreen.SeeAllRoute
 import com.msk.ui.HomeRoute
 
 
@@ -57,7 +55,7 @@ internal fun CineJetMain() {
     }
 
 
-    CineJetNavigationWrapper(navLayoutType = navLayoutType, cineJetBottomBar = {
+    CineJetNavigationWrapper(navLayoutType = navLayoutType,isBottomBarVisible = cineJetAppState.isBottomBarVisible, cineJetBottomBar = {
         CineJetBottomBar(
             CineJetTopLevelNavigation.entries,
             currentTopLevelDestination
@@ -92,26 +90,26 @@ internal fun CineJetMain() {
                                 UiEvent.OnSeeAllClicked(mediaType)
                             )
                         })
-                    when (currentUiState) {
-                        is ExpandedScreenState.Detail -> {
-                            DetailRoute(
-                                Modifier
-                                    .weight(1f)
-                                    .background(color = Color.Red),
-                                id = currentUiState.mediaId
-                            )
-                        }
-
-                        is ExpandedScreenState.SeeAll -> {
-                            SeeAllRoute(
-                                Modifier
-                                    .weight(1f)
-                                    .background(color = Color.Blue),
-                                mediaType = currentUiState.category
-                            )
-                        }
-
-                    }
+//                    when (currentUiState) {
+//                        is ExpandedScreenState.Detail -> {
+//                            DetailRoute(
+//                                Modifier
+//                                    .weight(1f)
+//                                    .background(color = Color.Red),
+//                                id = currentUiState.mediaId
+//                            )
+//                        }
+//
+//                        is ExpandedScreenState.SeeAll -> {
+//                            SeeAllRoute(
+//                                Modifier
+//                                    .weight(1f)
+//                                    .background(color = Color.Blue),
+//                                mediaType = currentUiState.category
+//                            )
+//                        }
+//
+//                    }
 
                 }
             }
