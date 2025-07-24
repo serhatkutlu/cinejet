@@ -16,14 +16,18 @@ import com.msk.feature.detail.ui.DetailUiState
 
 @Composable
 fun VideoTabContent(detailUiState: DetailUiState) {
-    val videos = detailUiState.videos?.first()
+
+    val videos = detailUiState.videos?.run {
+        firstOrNull()
+    }
 
     if (detailUiState.isLoading) {
         CircularProgressIndicator()
-    } else if (videos != null) {
+    } else if (videos != null && videos.videoKey.isNotEmpty()&&detailUiState.isVideoLoaded) {
+
         val videoKey = videos.videoKey
         Column {
-            CineJetText(text =videos.name , style = MaterialTheme.typography.headlineSmall)
+            CineJetText(text = videos.name, style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.height(LocalCineJetSpacing.current.large))
             YouTubePlayer(videoKey)
 

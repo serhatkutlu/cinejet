@@ -41,7 +41,7 @@ internal fun MovieDetailDto.toMovieDetail(): MovieDetail {
         popularity = popularity,
         posterPath = posterPath,
         recommendations = recommendations.results.map { it.toRecommendation() },
-        releaseDate = LocalDate.parse(releaseDate),
+        releaseDate =if (releaseDate.isEmpty()) LocalDate.now() else LocalDate.parse(releaseDate),
         revenue = revenue,
         runtime = runtime.toString(),
         status = status,

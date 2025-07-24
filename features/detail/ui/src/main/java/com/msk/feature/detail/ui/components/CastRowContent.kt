@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.msk.common.util.Constants.AVATAR_SHAPE_VALUE
 import com.msk.common.util.parseImageUrl
 import com.msk.design_system.components.CineJetAsyncImage
 import com.msk.design_system.components.CineJetText

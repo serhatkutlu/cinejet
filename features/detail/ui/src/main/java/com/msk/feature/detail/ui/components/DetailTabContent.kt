@@ -15,19 +15,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.msk.design_system.components.CineJetText
+import com.msk.design_system.theme.CineJetSpacing
 import com.msk.design_system.theme.LocalCineJetSpacing
 import com.msk.feature.detail.ui.DetailUiState
 import com.msk.feature.detail.ui.util.Constants
 
 @Composable
-fun DetailTabContent(detailUiState: DetailUiState) {
+fun DetailTabContent(detailUiState: DetailUiState, onRecommendationClick: (Int) -> Unit) {
     val detail = detailUiState.movieDetail
 
     if (detailUiState.isLoading) {
         CircularProgressIndicator()
     } else if (detail != null) {
-        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-            if (detail.overview.isNotBlank()){
+        Column(Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()).padding(bottom = LocalCineJetSpacing.current.large)) {
+            if (detail.overview.isNotBlank()) {
 
                 CineJetText(
                     modifier = Modifier.padding(LocalCineJetSpacing.current.medium),
@@ -35,16 +38,22 @@ fun DetailTabContent(detailUiState: DetailUiState) {
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(Modifier.height(LocalCineJetSpacing.current.extraSmall))
+                Spacer(Modifier.height(LocalCineJetSpacing.current.large))
                 CineJetText(
                     modifier = Modifier.padding(LocalCineJetSpacing.current.medium),
                     text = detail.overview,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
-            Spacer(Modifier.height(LocalCineJetSpacing.current.extraSmall))
+            Spacer(Modifier.height(LocalCineJetSpacing.current.large))
 
             CastRowContent(detail.casts)
+            Spacer(Modifier.height(LocalCineJetSpacing.current.large))
+
+            RecommendationRowContent(
+                detail.recommendations,
+                onRecommendationClick = onRecommendationClick
+            )
         }
 
     } else {

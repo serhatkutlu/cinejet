@@ -22,7 +22,7 @@ import javax.inject.Inject
 class MovieDetailRepositoryImp @Inject constructor(private val movieDetailDataSource: MovieDetailDataSource) :
     MovieDetailRepository {
     override fun loadMovieDetailById(id: Int): Flow<Resource<MovieDetail>> = flow {
-
+        id
         val response = movieDetailDataSource.fetchMovieDetail(id)
         response.onSuccess {
             emit(Resource.Success(it.toMovieDetail()))

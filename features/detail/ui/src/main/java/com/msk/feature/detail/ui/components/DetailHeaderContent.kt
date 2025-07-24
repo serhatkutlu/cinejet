@@ -48,7 +48,7 @@ fun DetailHeaderContent(moviedetail: MovieDetail) {
                     text = moviedetail.releaseDate.year.toString()
                 )
                 IconWithText(iconId = R.drawable.time, text = moviedetail.runtime.toString())
-                IconWithText(iconId = R.drawable.movie, text = moviedetail.genres.first().name)
+                IconWithText(iconId = R.drawable.movie, text = moviedetail.genres.firstOrNull()?.name ?: "-")
             }
         }
 

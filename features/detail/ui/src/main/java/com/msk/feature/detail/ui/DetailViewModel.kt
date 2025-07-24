@@ -32,28 +32,33 @@ class DetailViewModel @Inject constructor(
 ) : BaseViewModel<DetailUiState, DetailUiEvent, DetailUiEffect>(DetailUiState()) {
 
 
-    private val detailArgs: Detail = savedStateHandle.toRoute()
+    //private val detailArgs: Detail = savedStateHandle.toRoute()
+   // private var detailId: Int = detailArgs.id
 
-    private val detailId: Int = detailArgs.id
 
-
-    init {
-        loadMovieDetail(detailId)
-
-    }
+//    init {
+//        loadMovieDetail(detailId)
+//
+//    }
     override fun onEvent(event: DetailUiEvent) {
         when (event) {
 
             is DetailUiEvent.OnTabSelected -> {
-                setState { copy(selectedTabIndex = event.index) }
+                updateState { copy(selectedTabIndex = event.index) }
 
                 when {
-                    event.index == 0 && !uiState.value.isDetailLoaded -> loadMovieDetail(detailId)
+                    event.index == 0 && !uiState.value.isDetailLoaded -> loadMovieDetail(event.movieId)
                     event.index == 1 && !uiState.value.isVideoLoaded ->
-                        loadMovieVideos(movieId = detailId)
-                    event.index == 2 && !uiState.value.isReviewLoaded -> loadMovieReviews(movieId = detailId)
+                        loadMovieVideos(movieId = event.movieId)
+                    event.index == 2 && !uiState.value.isReviewLoaded -> loadMovieReviews(movieId = event.movieId)
                 }
 
+            }
+
+            is DetailUiEvent.OnRecommendationClick -> setEffect{ DetailUiEffect.NavigateToDetail(event.movieId) }
+            is DetailUiEvent.OnMovieIdChanged -> {
+                updateState { copy(isDetailLoaded = false, isVideoLoaded = false, isReviewLoaded = false) }
+                loadMovieDetail(event.movieId)
             }
         }
     }
@@ -93,7 +98,7 @@ private fun loadMovieDetail(movieId: Int) {
 
                 when (result) {
                     is com.msk.common.util.Resource.Success -> {
-                        setState {
+                        updateState {
                             copy(
                                 movieDetail = result.data,
                                 isDetailLoaded = true,
@@ -104,11 +109,11 @@ private fun loadMovieDetail(movieId: Int) {
                     }
 
                     is com.msk.common.util.Resource.Loading -> {
-                        setState { copy(isLoading = true) }
+                        updateState { copy(isLoading = true) }
                     }
 
                     is com.msk.common.util.Resource.Error -> {
-                        setState {
+                        updateState {
                             copy(
                                 error = null,
                                 movieDetail = result.data,
@@ -126,13 +131,13 @@ private fun loadMovieDetail(movieId: Int) {
     private fun loadMovieVideos(movieId: Int) {
         getMovieVideoByIdUseCase(movieId).onEach { movieVideo ->
             movieVideo.onSuccess {
-                setState { copy(videos = it, isVideoLoaded = true) }
+                updateState { copy(videos = it, isVideoLoaded = true) }
             }
             movieVideo.onLoading {
-                setState { copy(isLoading = true) }
+                updateState { copy(isLoading = true) }
             }
             movieVideo.onError { errorCategory, data ->
-                setState { copy(error = errorCategory.messageKey, videos = data) }
+                updateState { copy(error = errorCategory.messageKey, videos = data) }
             }
 
         }.launchIn(viewModelScope)
@@ -141,7 +146,7 @@ private fun loadMovieDetail(movieId: Int) {
     private fun loadMovieReviews(movieId: Int) {
 
         val reviewsFlow = getMovieReviewsByIdUseCase(movieId)
-        setState { copy(reviews = reviewsFlow, isReviewLoaded = true) }
+        updateState { copy(reviews = reviewsFlow, isReviewLoaded = true) }
     }
 }
 
@@ -163,9 +168,11 @@ data class DetailUiState(
 )
 
 sealed class DetailUiEvent {
-    data class OnTabSelected(val index: Int) : DetailUiEvent()
-
+    data class OnTabSelected(val index: Int, val movieId: Int) : DetailUiEvent()
+    data class OnRecommendationClick(val movieId: Int) : DetailUiEvent()
+    data class OnMovieIdChanged (val movieId: Int) : DetailUiEvent()
 }
 
 sealed class DetailUiEffect {
+    data class NavigateToDetail(val movieId: Int) : DetailUiEffect()
 }

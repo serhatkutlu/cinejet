@@ -23,16 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.msk.common.util.Constants.AVATAR_SHAPE_VALUE
 import com.msk.common.util.TmdbPosterSize
 import com.msk.common.util.parseImageUrl
 import com.msk.design_system.components.CineJetAsyncImage
 import com.msk.design_system.components.CineJetText
 import com.msk.design_system.theme.LocalCineJetSpacing
 import com.msk.feature.detail.ui.DetailUiState
+import com.msk.feature.detail.ui.R
 import com.msk.model.detail.Review
 
 
@@ -57,9 +58,10 @@ fun ReviewTabContent(detailUiState: DetailUiState) {
 
         error != null -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CineJetText(text = error.localizedMessage ?: "Unknown error", color = Color.Red)
+                CineJetText(text = error.localizedMessage ?: stringResource(R.string.unknown_error), color = Color.Red)
             }
         }
+
 
         else -> {
             LazyColumn(Modifier.fillMaxSize().padding(vertical = LocalCineJetSpacing.current.medium)) {
@@ -70,6 +72,15 @@ fun ReviewTabContent(detailUiState: DetailUiState) {
                     }
                 }
 
+                if (reviews.itemCount < 1){
+                    item {
+                        Text(
+                            text = stringResource(R.string.no_reviews_available),
+                            modifier = Modifier.padding(16.dp),
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
                 if (isAppending) {
                     item {
                         Box(

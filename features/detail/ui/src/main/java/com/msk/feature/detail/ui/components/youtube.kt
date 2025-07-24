@@ -33,7 +33,7 @@ fun YouTubePlayer(
 
                 addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                     override fun onReady(player: YouTubePlayer) {
-                        player.loadVideo(videoId, 0f)
+                        player.cueVideo(videoId, 0f)
                     }
                 })
             }

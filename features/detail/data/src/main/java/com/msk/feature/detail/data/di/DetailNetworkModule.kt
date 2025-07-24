@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -14,7 +15,7 @@ object DetailNetworkModule {
 
     @Provides
     fun provideMovieService(retrofit: Retrofit): DetailService {
-        return retrofit.create(DetailService::class.java)
+        return retrofit.create()
     }
 
 

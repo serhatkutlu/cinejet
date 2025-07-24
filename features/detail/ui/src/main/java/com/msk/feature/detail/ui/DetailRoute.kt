@@ -1,30 +1,15 @@
 package com.msk.feature.detail.ui
 
-import YouTubePlayer
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 
@@ -32,6 +17,8 @@ import androidx.compose.ui.Modifier
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 import com.msk.design_system.components.CineJetText
 
@@ -47,21 +34,41 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DetailRoute(
+    id: Int,
     modifier: Modifier = Modifier,
-    viewModel: DetailViewModel = hiltViewModel()
+    viewModel: DetailViewModel = hiltViewModel(),
+    navigateToDetail: (Int) -> Unit = {}
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val tabTitles = MovieDetailTab.fromResString()
 
 
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect {
+            when (it) {
+                is DetailUiEffect.NavigateToDetail -> {
+                    navigateToDetail(it.movieId)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(id) {
+        id.let {
+            viewModel.onEvent(DetailUiEvent.OnMovieIdChanged(it))
+        }
+    }
     DetailScreen(
         modifier = modifier,
         uiState = uiState,
         onTabSelected = { index ->
-            viewModel.onEvent(DetailUiEvent.OnTabSelected(index))
+            viewModel.onEvent(DetailUiEvent.OnTabSelected(index,id))
         },
-        tabTitles = tabTitles
+        tabTitles = tabTitles,
+        onRecommendationClick = { id ->
+            viewModel.onEvent(DetailUiEvent.OnRecommendationClick(id))
+        }
     )
 }
 
@@ -72,9 +79,11 @@ fun DetailScreen(
     uiState: DetailUiState,
     onTabSelected: (Int) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    tabTitles: List<String> = listOf()
+    tabTitles: List<String> = listOf(),
+    onRecommendationClick: (Int) -> Unit = {}
 ) {
     val pagerState = rememberPagerState { tabTitles.size }
+
 
     LazyColumn(modifier = modifier) {
         item { DetailHeaderCarouselContent(uiState.movieDetail) }
@@ -101,10 +110,15 @@ fun DetailScreen(
 
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.aspectRatio(1f)
+                modifier = Modifier.aspectRatio(1f),
+                userScrollEnabled = false
             ) { page ->
                 when (page) {
-                    0 -> DetailTabContent(uiState)
+                    0 -> DetailTabContent(
+                        uiState,
+                        onRecommendationClick = onRecommendationClick
+                    )
+
                     1 -> VideoTabContent(uiState)
                     2 -> ReviewTabContent(uiState)
                 }

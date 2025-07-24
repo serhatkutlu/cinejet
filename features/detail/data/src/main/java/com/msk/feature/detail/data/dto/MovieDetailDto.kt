@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MovieDetailDto(
     @SerialName(JsonKeys.ADULT) val adult: Boolean,
-    @SerialName(JsonKeys.BACKDROP_PATH) val backdropPath: String,
+    @SerialName(JsonKeys.BACKDROP_PATH) val backdropPath: String?,
     @SerialName(JsonKeys.BUDGET) val budget: Int,
     @SerialName(JsonKeys.CREDITS) val credits: CreditsDto,
     @SerialName(JsonKeys.GENRES) val genres: List<GenreDto>,
@@ -23,7 +23,7 @@ data class MovieDetailDto(
     @SerialName(JsonKeys.POSTER_PATH) val posterPath: String?,
     @SerialName(JsonKeys.RECOMMENDATIONS) val recommendations: RecommendationsDto,
     @SerialName(JsonKeys.RELEASE_DATE) val releaseDate: String,
-    @SerialName(JsonKeys.REVENUE) val revenue: Int,
+    @SerialName(JsonKeys.REVENUE) val revenue: Long,
     @SerialName(JsonKeys.RUNTIME) val runtime: Int,
     @SerialName(JsonKeys.STATUS) val status: String,
     @SerialName(JsonKeys.TAGLINE) val tagline: String?,

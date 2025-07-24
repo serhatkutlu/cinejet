@@ -3,5 +3,7 @@
     <string name="detail_tab_detail">Detail</string>
     <string name="detail_tab_videos">Videos</string>
     <string name="detail_tab_reviews">Reviews</string>
+    <string name="unknown_error">Unknown Error</string>
+    <string name="no_reviews_available">No reviews available</string>
 
 </resources>

@@ -25,11 +25,12 @@ fun DetailHeaderCarouselContent(movieDetail: MovieDetail?) {
     BoxWithConstraints {
         val height = maxWidth * 1.2f
 
+        movieDetail
         Box {
             if (movieDetail?.images?.posters.isNullOrEmpty()) {
                 CineJetAsyncImage(
 
-                    movieDetail?.backdropPath?.parseImageUrl(size = TmdbPosterSize.W500), Modifier
+                    (movieDetail?.backdropPath?: movieDetail?.posterPath)?.parseImageUrl(size = TmdbPosterSize.W500), Modifier
                         .height(height)
                         .fillMaxWidth()
                 )
