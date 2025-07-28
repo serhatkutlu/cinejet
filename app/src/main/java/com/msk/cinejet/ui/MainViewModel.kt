@@ -1,8 +1,8 @@
 package com.msk.cinejet.ui
 
 
-import com.msk.common.util.MediaType
 import com.msk.design_system.base.viewmodel.BaseViewModel
+import com.msk.model.common.MediaType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

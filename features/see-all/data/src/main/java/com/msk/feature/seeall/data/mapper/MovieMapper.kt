@@ -1,8 +1,8 @@
 package com.msk.feature.seeall.data.mapper
 
-import com.msk.common.util.MediaType
 import com.msk.core.data.dto.MovieDto
 import com.msk.database.model.seeall.MovieEntity
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 
 internal fun MovieDto.toEntity(mediaType: MediaType): MovieEntity {

@@ -1,4 +1,4 @@
-package com.msk.common.util
+package com.msk.model.common
 
 
 enum class MediaType(val mediaType: String) {

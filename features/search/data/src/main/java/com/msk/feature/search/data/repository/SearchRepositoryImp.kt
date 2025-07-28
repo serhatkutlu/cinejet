@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.msk.common.util.MediaType
 import com.msk.common.util.Resource
 import com.msk.common.util.isDataStale
 import com.msk.core.network_helper.NetworkHelper
@@ -15,13 +14,14 @@ import com.msk.feature.search.data.datasource.imp.SearchRemoteDataSource
 import com.msk.feature.search.data.mapper.toDomainModel
 import com.msk.feature.search.data.mapper.toEntity
 import com.msk.feature.search.data.paging.SearchPagingSource
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import com.msk.network.util.networkBoundResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
- class SearchRepositoryImp @Inject constructor(
+class SearchRepositoryImp @Inject constructor(
     private val localDataSource: LocalMovieDataSource,
     private val remoteDataSource: SearchRemoteDataSource,
     networkHelper: NetworkHelper

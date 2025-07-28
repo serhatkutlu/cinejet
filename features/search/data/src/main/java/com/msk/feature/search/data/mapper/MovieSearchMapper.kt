@@ -1,9 +1,9 @@
 package com.msk.feature.search.data.mapper
 
-import com.msk.common.util.MediaType
 import com.msk.database.model.seeall.MovieEntity
 import com.msk.feature.search.data.dto.MovieDto
 import com.msk.feature.search.data.dto.MovieSearchResponseDto
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import com.msk.model.search.MovieSearchResponse
 

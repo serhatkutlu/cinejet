@@ -69,7 +69,7 @@ internal fun CineJetMain() {
         )
     }) {
         if (isCompact) {
-            CineJetNavGraph(appState = cineJetAppState)
+            CineJetNavGraph(appState = cineJetAppState, modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars))
         } else {
             Box(Modifier.fillMaxSize()) {
                 Row(

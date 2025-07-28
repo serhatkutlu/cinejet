@@ -12,7 +12,7 @@ data class MovieDetailDto(
     @SerialName(JsonKeys.CREDITS) val credits: CreditsDto,
     @SerialName(JsonKeys.GENRES) val genres: List<GenreDto>,
     @SerialName(JsonKeys.HOMEPAGE) val homepage: String?,
-    @SerialName(JsonKeys.ID) val id: Int,
+    @SerialName(JsonKeys.ID) val id: Long,
     @SerialName(JsonKeys.IMAGES) val images: ImagesDto,
     @SerialName(JsonKeys.IMDB_ID) val imdbId: String?,
     @SerialName(JsonKeys.ORIGIN_COUNTRY) val originCountry: List<String>,

@@ -1,6 +1,10 @@
-package com.msk.model.detail
+package com.msk.database.model.detail
 
-data class Cast(
+import kotlinx.serialization.Serializable
+
+
+@Serializable
+data class CastEntity (
     val id: Int,
     val name: String,
     val character: String,

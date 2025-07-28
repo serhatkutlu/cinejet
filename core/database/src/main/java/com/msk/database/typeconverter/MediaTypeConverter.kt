@@ -1,7 +1,7 @@
 package com.msk.database.typeconverter
 
 import androidx.room.TypeConverter
-import com.msk.common.util.MediaType
+import com.msk.model.common.MediaType
 
 internal class MediaTypeConverter {
 

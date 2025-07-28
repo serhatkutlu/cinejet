@@ -3,8 +3,8 @@ package com.msk.database.model.seeall
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.msk.common.util.MediaType
 import com.msk.database.util.Constants
+import com.msk.model.common.MediaType
 
 @Entity(tableName = Constants.Tables.MOVIE_TABLE_NAME)
 data class MovieEntity(

@@ -18,7 +18,7 @@ fun CineJetText(
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
-    textAlign: TextAlign? = null,
+    textAlign: TextAlign? = TextAlign.Center,
     fontWeight: FontWeight? = null
 ) {
     Text(

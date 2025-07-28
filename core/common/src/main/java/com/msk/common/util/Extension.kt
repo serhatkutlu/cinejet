@@ -1,6 +1,8 @@
 package com.msk.common.util
 
 import com.msk.common.util.Constants.IMAGE_BASE_URL
+import com.msk.model.common.Movie
+import com.msk.model.detail.Recommendation
 import kotlin.time.Duration.Companion.days
 
 
@@ -20,4 +22,13 @@ fun isDataStale(movie: Long?): Boolean {
     val lastFetchedTime = movie ?: 0
     return (currentTime - lastFetchedTime) > cacheTime
 }
+
+
+fun List<Movie>.filterMoviesWithPosters()=filter {
+    it.posterPath != null&& it.backdropPath != null
+}
+fun List<Recommendation>.filterRecommendationsWithPosters()=filter {
+    it.posterPath != null
+}
+
 

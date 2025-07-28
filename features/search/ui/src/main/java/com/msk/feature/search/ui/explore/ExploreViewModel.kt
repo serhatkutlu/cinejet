@@ -1,13 +1,18 @@
 package com.msk.feature.search.ui.explore
 
 import androidx.lifecycle.viewModelScope
-import com.msk.common.util.MediaType
 import com.msk.common.util.onSuccess
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.feature.domain.usecase.GetMoviesByMediaTypeUseCase
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel

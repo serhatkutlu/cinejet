@@ -1,8 +1,9 @@
 package com.msk.domain.usecase
 
-import com.msk.common.util.MediaType
 import com.msk.common.util.Resource
+import com.msk.common.util.filterMoviesWithPosters
 import com.msk.domain.repository.MovieHomeRepository
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -17,14 +18,15 @@ class GetHomeMoviesUseCase @Inject constructor(
         }
 
         return combine(flows) { resources: Array<Resource<List<Movie>>> ->
+
             when {
                 resources.any { it is Resource.Loading } -> Resource.Loading
                 resources.any { it is Resource.Error<*> } -> {
                     val error = resources.first { it is Resource.Error<*> } as Resource.Error<*>
                     val mapResult = movieTypes.zip(resources).associate { (mediaType, resource) ->
                         val data = when(resource) {
-                            is Resource.Success -> resource.data.filterPoster()
-                            is Resource.Error -> resource.data?.filterPoster()
+                            is Resource.Success -> resource.data.filterMoviesWithPosters()
+                            is Resource.Error -> resource.data?.filterMoviesWithPosters()
                             else -> null
                         }
                         mediaType to data
@@ -35,7 +37,7 @@ class GetHomeMoviesUseCase @Inject constructor(
                 else -> {
                     val mapResult =
                         movieTypes.zip(resources).associate { (mediaType, resource) ->
-                            val data = (resource as Resource.Success).data.filterPoster()
+                            val data = (resource as Resource.Success).data.filterMoviesWithPosters()
                             mediaType to data
                         }
 
@@ -47,6 +49,4 @@ class GetHomeMoviesUseCase @Inject constructor(
 
 }
 
-private fun List<Movie>.filterPoster()=filter {
-        it.posterPath != null&& it.backdropPath != null
-    }
+

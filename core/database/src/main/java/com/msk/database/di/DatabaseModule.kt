@@ -19,7 +19,9 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideCineJetDatabase(@ApplicationContext context: Context): CinejetDatabase =
-        Room.databaseBuilder(context, CinejetDatabase::class.java, Constants.Database.NAME).build()
+        Room.databaseBuilder(context, CinejetDatabase::class.java, Constants.Database.NAME)
+            .fallbackToDestructiveMigration(true)
+            .build()
 
     @Provides
     fun provideMovieDao(database: CinejetDatabase) = database.movieDao

@@ -5,5 +5,9 @@
     <string name="detail_tab_reviews">Reviews</string>
     <string name="unknown_error">Unknown Error</string>
     <string name="no_reviews_available">No reviews available</string>
+    <string name="back">Back</string>
+    <string name="favorite">Favorite</string>
+
+
 
 </resources>

@@ -30,19 +30,19 @@ fun CineJetNavGraph(
             appState.navigate(
                 SeeAll(mediaType)
             )
-        })
+        }, modifier = Modifier)
 
 
         detailGraph(navigateToDetail = { id ->
             appState.navigate(Detail(id))
-        })
+        }, onNavigateBack = { appState.onBackClick() },modifier = Modifier)
 
-    seeAllNavGraph(
-        onMovieSelected = { id ->
-            appState.navigate(Detail(id))
+        seeAllNavGraph(
+            onMovieSelected = { id ->
+                appState.navigate(Detail(id))
 
-        }
-    )
+            },modifier = modifier
+        )
 
 
         searchFlow(
@@ -51,9 +51,9 @@ fun CineJetNavGraph(
             },
             onSeeAllClick = { appState.navigate(SeeAll(it)) },
             onNavigateToSearch = { appState.navigate(Search) },
-            onBackClick = { appState.onBackClick()}
+            onBackClick = { appState.onBackClick() },
+            modifier =modifier
         )
-
 
 
 //        composable(CineJetNavigationItem.SearchScreen.route.route) {
@@ -72,5 +72,5 @@ fun CineJetNavGraph(
 //            }
 //        }
 
-}
+    }
 }

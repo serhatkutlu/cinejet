@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.msk.common.util.MediaType
 import com.msk.database.model.seeall.MovieRemoteKeyEntity
 import com.msk.database.util.Constants.Tables.MOVIE_REMOTE_KEY
+import com.msk.model.common.MediaType
 
 @Dao
 interface MovieRemoteKeyDao {

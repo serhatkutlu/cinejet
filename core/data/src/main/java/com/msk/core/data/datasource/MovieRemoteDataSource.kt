@@ -1,9 +1,9 @@
 package com.msk.core.data.datasource
 
 
-import com.msk.common.util.MediaType
 import com.msk.core.data.dto.MovieResponseDto
 import com.msk.core.data.service.MovieService
+import com.msk.model.common.MediaType
 import com.msk.network.result.NetworkResult
 import javax.inject.Inject
 

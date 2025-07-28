@@ -1,6 +1,5 @@
 package com.msk.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.msk.common.util.MediaType
 import com.msk.design_system.components.CineJetCarousel
 import com.msk.design_system.components.CineJetMovieCategoryRow
 import com.msk.design_system.theme.LocalCineJetSpacing
+import com.msk.model.common.MediaType
 
 @Composable
 fun HomeRoute(

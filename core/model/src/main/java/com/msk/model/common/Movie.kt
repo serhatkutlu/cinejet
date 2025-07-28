@@ -1,6 +1,5 @@
 package com.msk.model.common
 
-import com.msk.common.util.MediaType
 
 data class Movie(
     val id: Int,

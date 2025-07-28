@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.msk.database.model.detail.MovieDetailEntity
+import com.msk.database.util.Constants
 import com.msk.database.util.Constants.Tables.MOVIE_DETAIL_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
@@ -15,12 +16,13 @@ interface MovieDetailDao {
     @Query("SELECT * FROM $MOVIE_DETAIL_TABLE_NAME WHERE id = :id")
     fun getById(id: Int): Flow<MovieDetailEntity?>
 
-    @Query("SELECT * FROM $MOVIE_DETAIL_TABLE_NAME WHERE id IN (:ids)")
-    fun getByIds(ids: List<Int>): Flow<List<MovieDetailEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movieDetails: MovieDetailEntity)
 
     @Query("DELETE FROM $MOVIE_DETAIL_TABLE_NAME WHERE id = :id")
-    suspend fun deleteById(id: Int)
+    suspend fun deleteById(id: Long)
+
+    @Query("UPDATE  $MOVIE_DETAIL_TABLE_NAME SET ${Constants.Columns.IS_FAVOURITE} =:isFavorite WHERE id = :id")
+    suspend fun updateFavoriteById(id: Long, isFavorite: Boolean)
 }

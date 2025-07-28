@@ -1,5 +1,6 @@
 package com.msk.feature.detail.ui
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
@@ -11,6 +12,7 @@ import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.domain.usecase.GetMovieDetailByIdUseCase
 import com.msk.domain.usecase.GetMovieReviewsByIdUseCase
 import com.msk.domain.usecase.GetMovieVideoByIdUseCase
+import com.msk.domain.usecase.SetMovieFavoriteUseCase
 import com.msk.model.detail.MovieDetail
 import com.msk.model.detail.MovieVideo
 import com.msk.model.detail.Review
@@ -28,15 +30,15 @@ class DetailViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailByIdUseCase,
     private val getMovieVideoByIdUseCase: GetMovieVideoByIdUseCase,
     private val getMovieReviewsByIdUseCase: GetMovieReviewsByIdUseCase,
-    savedStateHandle: SavedStateHandle,
+    private val setMovieFavoriteUseCase: SetMovieFavoriteUseCase,
 ) : BaseViewModel<DetailUiState, DetailUiEvent, DetailUiEffect>(DetailUiState()) {
 
 
     //private val detailArgs: Detail = savedStateHandle.toRoute()
-   // private var detailId: Int = detailArgs.id
+    // private var detailId: Int = detailArgs.id
 
 
-//    init {
+    //    init {
 //        loadMovieDetail(detailId)
 //
 //    }
@@ -50,82 +52,107 @@ class DetailViewModel @Inject constructor(
                     event.index == 0 && !uiState.value.isDetailLoaded -> loadMovieDetail(event.movieId)
                     event.index == 1 && !uiState.value.isVideoLoaded ->
                         loadMovieVideos(movieId = event.movieId)
+
                     event.index == 2 && !uiState.value.isReviewLoaded -> loadMovieReviews(movieId = event.movieId)
                 }
 
             }
 
-            is DetailUiEvent.OnRecommendationClick -> setEffect{ DetailUiEffect.NavigateToDetail(event.movieId) }
+            is DetailUiEvent.OnRecommendationClick -> setEffect {
+                DetailUiEffect.NavigateToDetail(
+                    event.movieId
+                )
+            }
+
             is DetailUiEvent.OnMovieIdChanged -> {
-                updateState { copy(isDetailLoaded = false, isVideoLoaded = false, isReviewLoaded = false) }
+                updateState {
+                    copy(
+                        isDetailLoaded = false,
+                        isVideoLoaded = false,
+                        isReviewLoaded = false
+                    )
+                }
                 loadMovieDetail(event.movieId)
             }
+
+            is DetailUiEvent.OnBackClick -> setEffect { DetailUiEffect.NavigateBack }
+            is DetailUiEvent.OnFavoriteClick -> onFavoriteClick(event.movieId, event.isFavorite)
         }
     }
 
-//    private fun loadMovieDetail(movieId: Int) {
-//        getMovieDetailUseCase(movieId)
-//            .onEach { result ->
-//                result.onSuccess { movieDetail ->
-//                    setState {
-//                        copy(
-//                            movieDetail = movieDetail,
-//                            isDetailLoaded = true,
-//                            isLoading = false,
-//                            error = null
-//                        )
-//                    }
-//                }
-//                result.onLoading {
-//                    setState { copy(isLoading = true) }
-//                }
-//                result.onError { errorCategory, data ->
-//                    setState {
-//                        copy(
-//                            error = errorCategory.messageKey,
-//                            movieDetail = data,
-//                            isLoading = false
-//                        )
-//                    }
-//                }
-//            }
-//            .launchIn(viewModelScope)
- //   }
-private fun loadMovieDetail(movieId: Int) {
-    viewModelScope.launch {
+    private fun onFavoriteClick(movieId: Long, isFavorite: Boolean) {
+        viewModelScope.launch {
+            setMovieFavoriteUseCase.invoke(movieId, isFavorite)
+            updateState { copy(movieDetail =movieDetail?.copy(isFavorite =!isFavorite ) ) }
+
+        }
+    }
+
+    private fun loadMovieDetail(movieId: Int) {
         getMovieDetailUseCase(movieId)
-            .collect{ result ->
-
-                when (result) {
-                    is com.msk.common.util.Resource.Success -> {
-                        updateState {
-                            copy(
-                                movieDetail = result.data,
-                                isDetailLoaded = true,
-                                isLoading = false,
-                                error = null
-                            )
-                        }
+            .onEach { result ->
+                result.onSuccess { movieDetail ->
+                    movieDetail?.title
+                    updateState {
+                        copy(
+                            movieDetail = movieDetail,
+                            isDetailLoaded = true,
+                            isLoading = false,
+                            error = null
+                        )
                     }
-
-                    is com.msk.common.util.Resource.Loading -> {
-                        updateState { copy(isLoading = true) }
-                    }
-
-                    is com.msk.common.util.Resource.Error -> {
-                        updateState {
-                            copy(
-                                error = null,
-                                movieDetail = result.data,
-                                isLoading = false
-                            )
-                        }
+                }
+                result.onLoading {
+                    updateState { copy(isLoading = true) }
+                }
+                result.onError { errorCategory, data ->
+                    updateState {
+                        copy(
+                            error = errorCategory.messageKey,
+                            movieDetail = data,
+                            isLoading = false
+                        )
                     }
                 }
             }
+            .launchIn(viewModelScope)
     }
-
-    }
+//    private fun loadMovieDetail(movieId: Int) {
+//        viewModelScope.launch {
+//            getMovieDetailUseCase(movieId)
+//                .collect { result ->
+//
+//                    when (result) {
+//                        is com.msk.common.util.Resource.Success -> {
+//                            updateState {
+//                                movieDetail?.title
+//                                copy(
+//                                    movieDetail = result.data,
+//                                    isDetailLoaded = true,
+//                                    isLoading = false,
+//                                    error = null
+//                                )
+//                            }
+//                        }
+//
+//                        is com.msk.common.util.Resource.Loading -> {
+//                            updateState { copy(isLoading = true) }
+//                        }
+//
+//                        is com.msk.common.util.Resource.Error -> {
+//                            updateState {
+//                                copy(
+//                                    error = null,
+//                                    movieDetail = result.data,
+//                                    isLoading = false
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
+//        }
+//
+//    }
 
 
     private fun loadMovieVideos(movieId: Int) {
@@ -170,9 +197,12 @@ data class DetailUiState(
 sealed class DetailUiEvent {
     data class OnTabSelected(val index: Int, val movieId: Int) : DetailUiEvent()
     data class OnRecommendationClick(val movieId: Int) : DetailUiEvent()
-    data class OnMovieIdChanged (val movieId: Int) : DetailUiEvent()
+    data class OnMovieIdChanged(val movieId: Int) : DetailUiEvent()
+    data object OnBackClick : DetailUiEvent()
+    data class OnFavoriteClick(val movieId: Long, val isFavorite: Boolean) : DetailUiEvent()
 }
 
 sealed class DetailUiEffect {
     data class NavigateToDetail(val movieId: Int) : DetailUiEffect()
+    data object NavigateBack : DetailUiEffect()
 }

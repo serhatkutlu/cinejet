@@ -1,5 +1,6 @@
 package com.msk.network.util
 
+import android.util.Log
 import com.msk.common.util.ErrorCategory
 import com.msk.common.util.Resource
 import com.msk.network.result.NetworkResult
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,
@@ -27,7 +29,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
             when(val networkResponse = fetch()){
                 is NetworkResult.Error -> {
                     onFetchFailed(Throwable(networkResponse.error.toString()))
-                    emitAll(query().map { Resource.Error(networkResponse.error) })
+                    emitAll(query().map { Resource.Error(networkResponse.error,it) })
                 }
                 is NetworkResult.Success -> {
                     saveFetchResult(networkResponse.data)

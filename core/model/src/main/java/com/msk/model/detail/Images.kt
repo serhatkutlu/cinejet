@@ -1,7 +1,5 @@
 package com.msk.model.detail
 
-import org.intellij.lang.annotations.Language
-
 data class Images(
     val backdrops: List<ImageItem>,
     val posters: List<ImageItem>

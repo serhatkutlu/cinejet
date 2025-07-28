@@ -17,12 +17,12 @@ object Search : Screen {
 }
 
 
-fun NavGraphBuilder.searchGraph(onBackClick: () -> Unit, navigateToDetail: (Int) -> Unit) {
+fun NavGraphBuilder.searchGraph(onBackClick: () -> Unit, navigateToDetail: (Int) -> Unit,modifier: Modifier) {
     composable<Search> {
         SearchRoute(
-            Modifier.windowInsetsPadding(WindowInsets.statusBars),
+            modifier =modifier ,
             onBackClick,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = navigateToDetail,
         )
     }
 }

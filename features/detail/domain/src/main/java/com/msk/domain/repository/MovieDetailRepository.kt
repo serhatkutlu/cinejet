@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailRepository  {
 
-    fun loadMovieDetailById(id:Int): Flow<Resource<MovieDetail>>
+    fun loadMovieDetailById(id:Int): Flow<Resource<MovieDetail?>>
     fun loadMovieVideoById(id:Int): Flow<Resource<List<MovieVideo>>>
     fun loadMovieReviewsById(id:Int): Flow<PagingData<Review>>
+    suspend fun setMovieFavorite(id:Long, isFavorite:Boolean)
 }

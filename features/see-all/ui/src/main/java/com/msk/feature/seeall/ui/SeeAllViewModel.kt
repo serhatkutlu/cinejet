@@ -5,23 +5,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.msk.common.util.MediaType
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.feature.seeall.ui.navigation.SeeAll
-import com.msk.features.see_all.domain.usecase.getSeeAllMovieDataUseCase
+import com.msk.features.see_all.domain.usecase.LoadMoviesByMediaTypeUseCase
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
  class SeeAllViewModel @Inject constructor(
-    private val getSeeAllMovieDataUseCase: getSeeAllMovieDataUseCase,
+    private val loadMoviesByMediaTypeUseCase: LoadMoviesByMediaTypeUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<UiState, UiEvent, UiEffect>(UiState()) {
 
@@ -36,7 +33,7 @@ import javax.inject.Inject
     private fun getMovies() {
         _uiState.update { it.copy(mediaType = mediaType) }
 
-        val moviesFlow = getSeeAllMovieDataUseCase(mediaType)
+        val moviesFlow = loadMoviesByMediaTypeUseCase(mediaType)
             .cachedIn(viewModelScope)
         _uiState.update { it.copy(movies = moviesFlow) }
 

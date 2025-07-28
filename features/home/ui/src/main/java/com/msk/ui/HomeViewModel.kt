@@ -1,13 +1,11 @@
 package com.msk.ui
 
 import androidx.lifecycle.viewModelScope
-import com.msk.common.util.Constants
-import com.msk.common.util.MediaType
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.domain.usecase.GetHomeMoviesUseCase
+import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update

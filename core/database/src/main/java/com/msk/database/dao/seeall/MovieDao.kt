@@ -1,15 +1,14 @@
 package com.msk.database.dao.seeall
 
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.msk.common.util.MediaType
 import com.msk.database.model.seeall.MovieEntity
 import com.msk.database.util.Constants
 import com.msk.database.util.Constants.Tables.MOVIE_TABLE_NAME
+import com.msk.model.common.MediaType
 import kotlinx.coroutines.flow.Flow
 
 @Dao
