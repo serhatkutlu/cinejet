@@ -1,24 +1,17 @@
 package com.msk.cinejet.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
-
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
-
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,16 +22,22 @@ import com.msk.cinejet.ui.navigation.CineJetNavGraph
 import com.msk.cinejet.ui.navigation.CineJetNavigationRail
 import com.msk.cinejet.ui.navigation.CineJetNavigationWrapper
 import com.msk.cinejet.ui.navigation.CineJetTopLevelNavigation
-import com.msk.ui.HomeRoute
+import com.msk.cinejet.ui.navigation.CineJetTwoPaneScreen
+import com.msk.design_system.components.CineJetErrorDialog
 
 
 @Composable
-internal fun CineJetMain() {
+internal fun CineJetMain( ) {
     val viewModel = hiltViewModel<MainViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentUiState = uiState
     val cineJetAppState = rememberCineJetAppState()
+
     val currentTopLevelDestination = cineJetAppState.currentTopLevelDestination
+
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+
 
     val adaptiveInfo = currentWindowAdaptiveInfo()
     val isCompact =
@@ -46,73 +45,80 @@ internal fun CineJetMain() {
                 adaptiveInfo.windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT
 
 
+    val isTwoPane =
+        adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED
+
 
     val navLayoutType = when {
         isCompact -> NavigationSuiteType.NavigationBar
-        adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM -> NavigationSuiteType.NavigationRail
+        adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM -> NavigationSuiteType.NavigationDrawer
         adaptiveInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED -> NavigationSuiteType.NavigationDrawer
         else -> NavigationSuiteType.NavigationBar
     }
 
+    LaunchedEffect(isTwoPane) {
+        cineJetAppState.isCompact = !isTwoPane
+    }
 
-    CineJetNavigationWrapper(navLayoutType = navLayoutType,isBottomBarVisible = cineJetAppState.isBottomBarVisible, cineJetBottomBar = {
-        CineJetBottomBar(
-            CineJetTopLevelNavigation.entries,
-            currentTopLevelDestination
-        ) { cineJetAppState.navigate(it.route) }
-    }, cineJetNavigationRail = {
-        CineJetNavigationRail(
-            modifier =  Modifier.width(80.dp).padding(top = 20.dp),
-            topLevelDestinations = CineJetTopLevelNavigation.entries,
-            currentDestination = currentTopLevelDestination?.route,
-            onNavigate = cineJetAppState::navigate
-        )
-    }) {
-        if (isCompact) {
-            CineJetNavGraph(appState = cineJetAppState, modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars))
-        } else {
-            Box(Modifier.fillMaxSize()) {
-                Row(
-                    modifier = Modifier.windowInsetsPadding(
-                        WindowInsets.navigationBars.union(
-                            WindowInsets.statusBars
-                        )
-                    )
-                ) {
-                    HomeRoute(
-                        Modifier
-                            .weight(1f),
-                        onMovieSelected = { id ->
-                            viewModel.onEvent(UiEvent.OnFirstMovieLoaded(id))
-                        },
-                        onSeeAllClick = { mediaType ->
-                            viewModel.onEvent(
-                                UiEvent.OnSeeAllClicked(mediaType)
-                            )
-                        })
-//                    when (currentUiState) {
-//                        is ExpandedScreenState.Detail -> {
-//                            DetailRoute(
-//                                Modifier
-//                                    .weight(1f)
-//                                    .background(color = Color.Red),
-//                                id = currentUiState.mediaId
-//                            )
-//                        }
-//
-//                        is ExpandedScreenState.SeeAll -> {
-//                            SeeAllRoute(
-//                                Modifier
-//                                    .weight(1f)
-//                                    .background(color = Color.Blue),
-//                                mediaType = currentUiState.category
-//                            )
-//                        }
-//
-//                    }
-
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect{
+            when(it){
+                is UiEffect.ShowAlertDialog-> {
+                    dialogMessage = it.message
+                    showDialog = true
                 }
+
             }
+
+        }
+    }
+
+    if (showDialog){
+        CineJetErrorDialog(dialogMessage, onDismiss = {showDialog=false})
+    }
+
+
+
+    CineJetNavigationWrapper(
+        navLayoutType = navLayoutType,
+        isBottomBarVisible = cineJetAppState.isBottomBarVisible,
+        cineJetBottomBar = {
+            CineJetBottomBar(
+                CineJetTopLevelNavigation.entries,
+                currentTopLevelDestination
+            ) { cineJetAppState.navigate(it.route) }
+        },
+        cineJetNavigationRail = {
+            CineJetNavigationRail(
+                modifier = Modifier
+                    .width(80.dp),
+                topLevelDestinations = CineJetTopLevelNavigation.entries,
+                currentDestination = currentTopLevelDestination?.route,
+                onNavigate = cineJetAppState::navigate
+            )
+        }) {
+        if (!isTwoPane) {
+
+            CineJetNavGraph(
+                appState = cineJetAppState,
+                modifier = Modifier.fillMaxSize(),
+                onUiStateChange = { viewModel.onEvent(it) }
+            )
+        } else {
+
+            Box(Modifier.fillMaxSize()) {
+
+
+                CineJetTwoPaneScreen(
+                    appState = cineJetAppState,
+                    modifier = Modifier,
+                    currentUiState.expandedScreenState,
+                    onUiStateChange = { viewModel.onEvent(it) }
+                )
+
+            }
+
         }
     }
 }
+

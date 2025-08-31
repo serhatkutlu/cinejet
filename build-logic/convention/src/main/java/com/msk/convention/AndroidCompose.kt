@@ -12,6 +12,7 @@ internal fun Project.configureAndroidCompose(
             compose = true
         }
 
+
         dependencies {
             val bom = libs.findLibrary("androidx-compose-bom").get()
             "implementation"(platform(bom))
@@ -19,7 +20,6 @@ internal fun Project.configureAndroidCompose(
             "androidTestImplementation"(platform(bom))
             "implementation"(libs.findLibrary("androidx-material3").get())
             "implementation"(libs.findLibrary("androidx-navigation-compose").get())
-            "implementation"(libs.findLibrary("androidx-ui-tooling-preview").get())
             "debugImplementation"(libs.findLibrary("androidx-ui-tooling").get())
             "testImplementation"(libs.findLibrary("junit").get())
             "androidTestImplementation"(libs.findLibrary("androidx-junit").get())

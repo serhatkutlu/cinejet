@@ -1,6 +1,7 @@
 package com.msk.ui
 
 import androidx.lifecycle.viewModelScope
+import com.msk.common.util.ErrorCategory
 import com.msk.design_system.base.viewmodel.BaseViewModel
 import com.msk.domain.usecase.GetHomeMoviesUseCase
 import com.msk.model.common.MediaType
@@ -25,6 +26,9 @@ class HomeViewModel @Inject constructor(private val getHomeMoviesUseCase: GetHom
         when (event) {
             is UiEvent.ShowSnackBar -> {
                 setEffect { UiEffect.ShowSnackBar(event.message) }
+            }
+            is UiEvent.RefreshUi->{
+                getMovies()
             }
         }
     }
@@ -53,7 +57,11 @@ class HomeViewModel @Inject constructor(private val getHomeMoviesUseCase: GetHom
 
                 is com.msk.common.util.Resource.Error -> {
                     _uiState.update {
-                        it.copy(isLoading = false, movies = response.data)
+                        it.copy(isLoading = false, movies = response.data, error = response.errorCategory.messageKey)
+                    }
+                    if (response.errorCategory== ErrorCategory.NetworkUnavailable){
+                        setEffect { UiEffect.ShowAlertDialog(com.msk.core.design_system.R.string.offline_mode_message) }
+
                     }
                 }
             }
@@ -71,10 +79,12 @@ data class UiState(
 
 sealed class UiEvent {
     data class ShowSnackBar(val message: String) : UiEvent()
+    data object RefreshUi : UiEvent()
 }
 
 sealed class UiEffect {
     data class ShowSnackBar(val message: String) : UiEffect()
+    data class ShowAlertDialog(val message: Int) : UiEffect()
 }
 
 

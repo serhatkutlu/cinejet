@@ -12,18 +12,20 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data object Home : Screen {
-    override val route = "Home"
+data object HomeScreen : Screen {
+    override val route = "HomeScreen"
 }
 
 
-fun NavGraphBuilder.homeGraph(onMovieSelected: (Int) -> Unit, onSeeAllClick: (MediaType) -> Unit, modifier: Modifier) {
-    composable<Home>{
+
+fun NavGraphBuilder.homeGraph(onMovieSelected: (Int) -> Unit, onSeeAllClick: (MediaType) -> Unit, modifier: Modifier,showAlertDialog:(String)->Unit) {
+    composable<HomeScreen>{
 
         HomeRoute(
             modifier = modifier,
             onMovieSelected = onMovieSelected,
-            onSeeAllClick = onSeeAllClick
+            onSeeAllClick = onSeeAllClick,
+            showAlertDialog = showAlertDialog
         )
     }
 }

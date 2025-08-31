@@ -10,7 +10,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 object SearchFlow : Screen {
-    override val route: String = "search_flow"
+    override val route: String = "SearchFlow"
+
+    @Serializable
+    object Explore : Screen {
+        override val route: String = "${SearchFlow.route}/Explore"
+    }
+
+    @Serializable
+    object Search : Screen {
+        override val route: String = "${SearchFlow.route}/Search"
+    }
 }
 
 fun NavGraphBuilder.searchFlow(
@@ -20,12 +30,12 @@ fun NavGraphBuilder.searchFlow(
     onBackClick: () -> Unit,
     modifier: Modifier
 ) {
-    navigation<SearchFlow>(Explore) {
+    navigation<SearchFlow>(SearchFlow.Explore) {
         exploreGraph(onMovieSelected, onSeeAllClick, onNavigateToSearch,modifier)
         searchGraph(
             onBackClick,
             navigateToDetail = onMovieSelected,
-            modifier = modifier
+            modifier = Modifier
         )
     }
 }

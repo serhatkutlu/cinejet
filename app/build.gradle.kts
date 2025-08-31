@@ -24,14 +24,17 @@ dependencies {
     implementation(project(":features:search:data"))
     implementation(project(":features:search:ui"))
 
-    //implementation(project(":features:search:data"))
-    //implementation(project(":features:search:ui"))
+    implementation(project(":features:favorites:data"))
+    implementation(project(":features:favorites:ui"))
+
+    implementation(project(":features:settings:ui"))
 
 
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:database"))
     implementation(project(":core:design-system"))
+    implementation(project(":core:preferences"))
 
 
 }

@@ -2,11 +2,9 @@ package com.msk.feature.seeall.ui
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.msk.design_system.base.viewmodel.BaseViewModel
-import com.msk.feature.seeall.ui.navigation.SeeAll
 import com.msk.features.see_all.domain.usecase.LoadMoviesByMediaTypeUseCase
 import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
@@ -22,24 +20,27 @@ import javax.inject.Inject
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<UiState, UiEvent, UiEffect>(UiState()) {
 
-    private val detailArgs: SeeAll = savedStateHandle.toRoute()
+    private var isShowedAlertDialog = false
 
-    private val mediaType: MediaType = detailArgs.mediaType
 
-    init {
-        getMovies()
-    }
-
-    private fun getMovies() {
+     fun getMovies(mediaType: MediaType) {
         _uiState.update { it.copy(mediaType = mediaType) }
 
         val moviesFlow = loadMoviesByMediaTypeUseCase(mediaType)
             .cachedIn(viewModelScope)
-        _uiState.update { it.copy(movies = moviesFlow) }
+        _uiState.update {
+            it.copy(movies = moviesFlow)
+        }
 
     }
     override fun onEvent(event: UiEvent) {
-
+        when(event){
+            is UiEvent.AlertDialogEvent -> {
+                if (isShowedAlertDialog) return
+                isShowedAlertDialog=true
+                setEffect { UiEffect.AlertDialogEffect(event.message) }
+            }
+        }
     }
 
 
@@ -51,8 +52,12 @@ import javax.inject.Inject
     val movies: Flow<PagingData<Movie>> = emptyFlow()
 )
 
- sealed class UiEffect
+sealed class UiEffect {
+    data class AlertDialogEffect(val message: String) : UiEffect()
+}
 
- sealed class UiEvent
+sealed class UiEvent {
+    data class AlertDialogEvent(val message: String) : UiEvent()
+}
 
 

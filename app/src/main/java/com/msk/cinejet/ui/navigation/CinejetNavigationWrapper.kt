@@ -2,11 +2,14 @@ package com.msk.cinejet.ui.navigation
 
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldLayout
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
-
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 
 @Composable
@@ -30,7 +33,7 @@ fun CineJetNavigationWrapper(
 
     }
     ) {
-        Surface {
+        Surface(modifier = Modifier) {
             content()
         }
 

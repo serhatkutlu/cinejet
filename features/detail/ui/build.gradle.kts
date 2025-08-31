@@ -14,7 +14,6 @@ dependencies {
     implementation(project(":features:detail:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-    implementation(libs.androidx.paging3)
     implementation(libs.androidx.paging3Compose)
     implementation (libs.androidyoutubeplayer.core)
 

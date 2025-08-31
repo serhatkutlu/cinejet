@@ -1,5 +1,6 @@
 package com.msk.cinejet.ui.navigation
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
@@ -36,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -106,8 +108,8 @@ fun CineJetBottomBar(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 topLevelDestinations.forEach { navItem ->
-                    val isSelected = currentTopLevelNavigation == navItem
 
+                    val isSelected = currentTopLevelNavigation?.route?.route?.startsWith(navItem.route.route) ?: false
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -129,7 +131,7 @@ fun CineJetBottomBar(
                         )
                         AnimatedVisibility(visible = isSelected) {
                             Text(
-                                text = navItem.route.route,
+                                text = stringResource(id =navItem.title),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.padding(top = 2.dp)

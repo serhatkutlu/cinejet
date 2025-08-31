@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancal</string>
+    <string name="language_dialog_message">Are you sure you want to change the app language?</string>
+    <string name="clear_cache_dialog_message">"Are you sure you want to clear the cache?"</string>
+</resources>

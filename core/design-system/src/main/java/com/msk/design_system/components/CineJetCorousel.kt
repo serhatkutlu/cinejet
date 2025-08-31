@@ -1,6 +1,7 @@
 package com.msk.design_system.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,7 @@ import com.msk.model.common.Movie
 fun CineJetCarousel(
     modifier: Modifier,
     list: List<Movie>,
+    onMovieClick: (Movie) -> Unit = {},
     contentPadding: PaddingValues= PaddingValues(LocalCineJetSpacing.current.extraLarge),
     pageSpacing: Dp=LocalCineJetSpacing.current.extraMedium
 ) {
@@ -49,6 +51,7 @@ fun CineJetCarousel(
             modifier = Modifier
                 .carouselTransition(page = page, pagerState = pagerState)
                 .clip(RoundedCornerShape(LocalCineJetSpacing.current.extraSmall))
+                .clickable { onMovieClick(movie) }
         ) {
             Box{
             AsyncImage(

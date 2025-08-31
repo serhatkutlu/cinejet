@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="Unknown_error">Unknown error</string>
+    <string name="no_content_found">No content found</string>
+    <string name="offline_mode_message"> No internet connection, you are now offline mode</string>
+    <string name="back">Back</string>
+    <string name="system">system</string>
+    <string name="dark">dark</string>
+    <string name="light">light</string>
+    <string name="dynamic">dynamic</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">cancel</string>
+
+
 </resources>

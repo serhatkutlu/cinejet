@@ -1,16 +1,16 @@
 package com.msk.feature.search.ui.explore
 
 
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,7 +22,6 @@ import com.msk.design_system.components.CineJetText
 import com.msk.design_system.theme.LocalCineJetSpacing
 import com.msk.feature.search.ui.ClickableSearchTextField
 import com.msk.model.common.MediaType
-import com.msk.model.common.Movie
 
 
 @Composable
@@ -34,8 +33,9 @@ fun ExploreRoute(
 ) {
     val viewModel = hiltViewModel<ExploreViewModel>()
 
-    val mediaTypeMovies by viewModel.mediaTypeMovies.collectAsState()
-    val error by viewModel.error.collectAsState()
+    //val mediaTypeMovies by viewModel.mediaTypeMovies.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
+
 
 
     LaunchedEffect(Unit) {
@@ -48,12 +48,12 @@ fun ExploreRoute(
         }
     }
     ExploreScreen(
-        mediaTypeMovies = mediaTypeMovies,
-        error = error,
+        uiState=uiState,
         onMovieSelected = {viewModel.onEvent(ExploreEvent.OnMovieSelected(it))},
         onSeeAllClick = {viewModel.onEvent(ExploreEvent.OnSeeAllClick(it))},
         modifier = modifier,
-        onClickSearch = {viewModel.onEvent(ExploreEvent.OnClickSearch)}
+        onClickSearch = {viewModel.onEvent(ExploreEvent.OnClickSearch)},
+        onPullToRefresh = {viewModel.onEvent(ExploreEvent.OnPullToRefresh)}
     )
 
 }
@@ -62,38 +62,44 @@ fun ExploreRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExploreScreen(
-    mediaTypeMovies: Map<MediaType, List<Movie>>,
-    error: String?,
+    uiState: ExploreState,
     onMovieSelected: (Int) -> Unit,
     onSeeAllClick: (MediaType) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = Search,
-    onClickSearch: () -> Unit = { }
+    onClickSearch: () -> Unit = { },
+    onPullToRefresh: () -> Unit = { }
 ) {
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
-        CenterAlignedTopAppBar(
-            title = { CineJetText("Search", style = MaterialTheme.typography.headlineMedium) },
+    PullToRefreshBox(
+        isRefreshing = uiState.isLoading,
+        onRefresh = onPullToRefresh,
+        state = rememberPullToRefreshState(),
+    ) {
+        Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+            CenterAlignedTopAppBar(
+                title = { CineJetText("Search", style = MaterialTheme.typography.headlineMedium) },
 
+                )
+
+            ClickableSearchTextField(
+                placeholder = placeholder,
+                onClick = onClickSearch
             )
 
-        ClickableSearchTextField(
-            placeholder = placeholder,
-            onClick = onClickSearch
-        )
+            Spacer(modifier = Modifier.height(LocalCineJetSpacing.current.large))
 
-        Spacer(modifier=Modifier.height(LocalCineJetSpacing.current.large))
+            uiState.movies.forEach { (mediaType, movies) ->
+                CineJetMovieCategoryRow(
+                    mediaType = mediaType.mediaType,
+                    onSeeAllClick = { onSeeAllClick(mediaType) },
+                    movies = movies,
+                    onMovieClick = { onMovieSelected(it.id) }
 
-        mediaTypeMovies.forEach { (mediaType, movies) ->
-            CineJetMovieCategoryRow(
-                mediaType = mediaType.mediaType,
-                onSeeAllClick = { onSeeAllClick(mediaType) },
-                movies = movies,
-                onMovieClick = { onMovieSelected(it.id) }
-            )
+                )
+            }
         }
     }
-
 }
 
 

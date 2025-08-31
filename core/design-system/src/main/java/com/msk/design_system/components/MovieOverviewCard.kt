@@ -31,7 +31,7 @@ import com.msk.model.common.Movie
 fun MovieOverviewCard(
     movie: Movie,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Card(
         modifier = modifier
@@ -79,6 +79,70 @@ fun MovieOverviewCard(
                 )
                 CineJetText(
                     text = "Rating: ${movie.voteAverage}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+
+                )
+            }
+        }
+    }
+}
+@Composable
+fun MovieOverviewCard(
+    posterPath: String,
+    title: String,
+    overview: String,
+    voteAverage: Double,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)
+            .padding(8.dp).clickable(onClick = onClick),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(8.dp).background(Color.Transparent),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CineJetAsyncImage(
+                imageUrl = posterPath.parseImageUrl(),
+                modifier = Modifier
+                    .weight(1f)
+                    .aspectRatio(2f / 3f)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(
+                modifier = Modifier
+                    .weight(2f)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                CineJetText(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                CineJetText(
+                    text = overview,
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 4,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+
+                )
+                CineJetText(
+                    text = "Rating: $voteAverage",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
 

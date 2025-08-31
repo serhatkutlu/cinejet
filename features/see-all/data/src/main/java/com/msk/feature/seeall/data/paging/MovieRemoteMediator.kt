@@ -6,8 +6,8 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.msk.core.data.datasource.MovieRemoteDataSource
 import com.msk.database.datasource.LocalMovieDataSource
-import com.msk.database.model.seeall.MovieEntity
-import com.msk.database.model.seeall.MovieRemoteKeyEntity
+import com.msk.database.model.movie.MovieEntity
+import com.msk.database.model.movie.MovieRemoteKeyEntity
 import com.msk.feature.seeall.data.mapper.toEntity
 import com.msk.model.common.MediaType
 import com.msk.network.result.NetworkResult

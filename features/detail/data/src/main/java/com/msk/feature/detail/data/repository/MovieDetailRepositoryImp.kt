@@ -5,16 +5,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.msk.common.util.Resource
-import com.msk.common.util.onError
-import com.msk.common.util.onSuccess
-import com.msk.database.datasource.LocalMovieDetailDataSource
-import com.msk.feature.detail.data.datasource.MovieDetailDataSource
+import com.msk.domain.repository.MovieDetailRepository
+import com.msk.feature.detail.data.datasource.LocalMovieDetailDataSource
+import com.msk.feature.detail.data.datasource.RemoteMovieDetailDataSource
 import com.msk.feature.detail.data.mapper.toMovieDetail
+import com.msk.feature.detail.data.mapper.toMovieDetailEntity
 import com.msk.feature.detail.data.mapper.toMovieVideo
 import com.msk.feature.detail.data.paging.ReviewPagingSource
 import com.msk.feature.detail.data.util.Constants.DEFAULT_REVIEWS_PAGE_SIZE
-import com.msk.domain.repository.MovieDetailRepository
-import com.msk.feature.detail.data.mapper.toMovieDetailEntity
 import com.msk.model.detail.MovieDetail
 import com.msk.model.detail.MovieVideo
 import com.msk.model.detail.Review
@@ -27,7 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class MovieDetailRepositoryImp @Inject constructor(private val movieDetailDataSource: MovieDetailDataSource,private val localMovieDetailDataSource: LocalMovieDetailDataSource) :
+class MovieDetailRepositoryImp @Inject constructor(private val movieDetailDataSource: RemoteMovieDetailDataSource, private val localMovieDetailDataSource: LocalMovieDetailDataSource) :
     MovieDetailRepository {
     override fun loadMovieDetailById(id: Int): Flow<Resource<MovieDetail?>> =
         networkBoundResource(
@@ -45,7 +43,15 @@ class MovieDetailRepositoryImp @Inject constructor(private val movieDetailDataSo
             },
             onFetchFailed = {
             }
-        )
+        ).onEach {
+            when(it){
+                is Resource.Success->{
+                    Log.d("serhat", "loadMovieDetailById: ${it.data?.title}")
+
+                }else->{}
+            }
+
+        }
 
 
     override fun loadMovieVideoById(id: Int): Flow<Resource<List<MovieVideo>>> = flow {

@@ -45,3 +45,11 @@ include(":core:data")
 include(":features:see-all:domain")
 include(":features:see-all:ui")
 include(":features:search:ui")
+
+
+include(":features:settings:ui")
+include(":features:favorites:data")
+include(":features:favorites:domain")
+include(":features:favorites:ui")
+include(":core:preferences")
+include(":core:cache")

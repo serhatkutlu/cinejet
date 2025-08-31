@@ -3,8 +3,8 @@ package com.msk.database.datasource
 import androidx.paging.PagingSource
 import com.msk.database.dao.seeall.MovieDao
 import com.msk.database.dao.seeall.MovieRemoteKeyDao
-import com.msk.database.model.seeall.MovieEntity
-import com.msk.database.model.seeall.MovieRemoteKeyEntity
+import com.msk.database.model.movie.MovieEntity
+import com.msk.database.model.movie.MovieRemoteKeyEntity
 import com.msk.database.util.Constants.DEFAULT_PAGE_SIZE
 import com.msk.database.util.RoomTransactionProvider
 import com.msk.model.common.MediaType

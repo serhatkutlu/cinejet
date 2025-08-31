@@ -1,9 +1,11 @@
 package com.msk
 
+import com.msk.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -13,6 +15,9 @@ class JvmLibraryConventionPlugin:Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.jvm")
+                dependencies {
+                    "implementation"(libs.findLibrary("junit").get())
+                }
 
             }
 
@@ -25,6 +30,7 @@ class JvmLibraryConventionPlugin:Plugin<Project> {
                         jvmTarget = com.msk.convention.AppConfig.JAVA_VERSION.toString()
                     }
                 }
+
             }
         }
     }

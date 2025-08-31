@@ -1,18 +1,30 @@
 package com.msk.feature.search.ui.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -85,38 +97,58 @@ private fun SearchScreen(
             }
         }
     }
+    val listState = rememberLazyGridState()
+    var previousScrollOffset by remember { mutableStateOf(0) }
+    var topBarVisible by remember { mutableStateOf(true) }
 
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemScrollOffset }.collect{currentOffset ->
+            topBarVisible = currentOffset < previousScrollOffset || listState.firstVisibleItemIndex == 0
+            previousScrollOffset = currentOffset
 
+        }
 
-    Column {
-        FullScreenSearch(
-            query = query,
-            onQueryChange = onQueryChange,
-            onBack = onBack,
-            modifier = modifier
-        )
+    }
 
-        Spacer(Modifier.height(LocalCineJetSpacing.current.medium))
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+    Scaffold(
+        modifier = modifier.windowInsetsPadding(WindowInsets.statusBars),
+        topBar = {
+            AnimatedVisibility(visible = topBarVisible) {
+                FullScreenSearch(
+                    query = query,
+                    onQueryChange = onQueryChange,
+                    onBack = onBack,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .nestedScroll(scrollConnection),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-
+                .padding(innerPadding)
         ) {
-            items(results.itemCount) { item ->
-                val movie = results[item]
-                movie?.let {
-                    MovieCard(
-                        movie = it,
-                        onClick = { onMovieClick(it.id) }
-                    )
-                }
+            Spacer(Modifier.height(LocalCineJetSpacing.current.medium))
 
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollConnection),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(results.itemCount) { index ->
+                    val movie = results[index]
+                    movie?.let {
+                        MovieCard(
+                            modifier = Modifier.aspectRatio(0.5f, matchHeightConstraintsFirst = true),
+                            movie = it,
+                            onClick = { onMovieClick(it.id) }
+                        )
+                    }
+                }
             }
         }
     }

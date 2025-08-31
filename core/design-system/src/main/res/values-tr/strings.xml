@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close">Kapat</string>
+    <string name="delete">Sil</string>
+    <string name="Unknown_error">Bilinmeyen hata</string>
+    <string name="no_content_found">İçerik bulunamadı</string>
+    <string name="offline_mode_message">İnternet bağlantısı yok, şu anda çevrimdışı moddasınız</string>
+    <string name="back">Geri</string>
+    <string name="system">Sistem</string>
+    <string name="dark">Koyu</string>
+    <string name="light">Açık</string>
+    <string name="dynamic">Dinamik</string>
+    <string name="ok">onayla</string>
+    <string name="cancel">vazgeç</string>
+</resources>

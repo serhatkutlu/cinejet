@@ -2,7 +2,7 @@ package com.msk.feature.search.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.msk.feature.search.data.datasource.imp.SearchRemoteDataSource
+import com.msk.feature.search.data.datasource.SearchRemoteDataSource
 import com.msk.feature.search.data.mapper.toDomain
 import com.msk.model.common.Movie
 import com.msk.network.result.NetworkResult

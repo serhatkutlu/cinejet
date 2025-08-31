@@ -8,10 +8,6 @@ import com.msk.feature.search.ui.explore.ExploreRoute
 import com.msk.model.common.MediaType
 import kotlinx.serialization.Serializable
 
-@Serializable
-object Explore : Screen {
-    override val route: String = "search"
-}
 
 
 fun NavGraphBuilder.exploreGraph(
@@ -20,7 +16,7 @@ fun NavGraphBuilder.exploreGraph(
     onNavigateToSearch: () -> Unit,
     modifier: Modifier
 ) {
-    composable<Explore> {
+    composable<SearchFlow.Explore> {
         ExploreRoute(
             modifier = modifier,
             onMovieSelected = onMovieSelected,

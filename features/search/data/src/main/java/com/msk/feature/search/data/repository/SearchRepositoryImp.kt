@@ -10,7 +10,7 @@ import com.msk.common.util.isDataStale
 import com.msk.core.network_helper.NetworkHelper
 import com.msk.database.datasource.LocalMovieDataSource
 import com.msk.feature.domain.repository.SearchRepository
-import com.msk.feature.search.data.datasource.imp.SearchRemoteDataSource
+import com.msk.feature.search.data.datasource.SearchRemoteDataSource
 import com.msk.feature.search.data.mapper.toDomainModel
 import com.msk.feature.search.data.mapper.toEntity
 import com.msk.feature.search.data.paging.SearchPagingSource
@@ -66,7 +66,8 @@ class SearchRepositoryImp @Inject constructor(
                     localDataSource.searchMovies(query)
                 }
             ).flow.map { pagingData ->
-                pagingData.map { it.toDomainModel() }
+                pagingData.map {
+                    it.toDomainModel() }
             }
         }
     }

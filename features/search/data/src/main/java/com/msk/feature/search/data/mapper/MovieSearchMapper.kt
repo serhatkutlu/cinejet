@@ -1,6 +1,7 @@
 package com.msk.feature.search.data.mapper
 
-import com.msk.database.model.seeall.MovieEntity
+import com.msk.database.model.detail.MovieDetailEntity
+import com.msk.database.model.movie.MovieEntity
 import com.msk.feature.search.data.dto.MovieDto
 import com.msk.feature.search.data.dto.MovieSearchResponseDto
 import com.msk.model.common.MediaType
@@ -34,7 +35,7 @@ internal fun MovieSearchResponseDto.toDomain(): MovieSearchResponse {
 
 internal fun MovieEntity.toDomainModel(): Movie {
     return Movie(
-        id = this.id,
+        id = this.networkId,
         title = this.title,
         overview = this.overview,
         voteAverage = this.voteAverage,
@@ -42,9 +43,24 @@ internal fun MovieEntity.toDomainModel(): Movie {
         backdropPath = this.backdropPath,
         releaseDate = this.releaseDate,
         mediaType = this.mediaType,
-        lastFetchedTime = this.lastFetchedTime
+        lastFetchedTime = this.lastFetchedTime,
 
     )
+
+}
+internal fun MovieDetailEntity.toDomainModel(): Movie {
+    return Movie(
+        id = this.id.toInt(),
+        title = this.title,
+        overview = this.overview,
+        voteAverage = this.voteAverage,
+        posterPath = this.posterPath,
+        backdropPath = this.backdropPath,
+        releaseDate = this.releaseDate,
+        mediaType = null,
+        lastFetchedTime =null,
+
+        )
 
 }
 

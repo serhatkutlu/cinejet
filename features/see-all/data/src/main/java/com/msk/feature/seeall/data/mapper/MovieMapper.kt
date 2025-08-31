@@ -1,7 +1,7 @@
 package com.msk.feature.seeall.data.mapper
 
 import com.msk.core.data.dto.MovieDto
-import com.msk.database.model.seeall.MovieEntity
+import com.msk.database.model.movie.MovieEntity
 import com.msk.model.common.MediaType
 import com.msk.model.common.Movie
 

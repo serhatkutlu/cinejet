@@ -31,4 +31,9 @@ object DatabaseModule {
 
     @Provides
     fun provideMovieRemoteKeyDao(database: CinejetDatabase) = database.movieRemoteKeyDao
+
+    @Provides
+    fun provideMovieSearchDao(database: CinejetDatabase) = database.movieSearchDao
+
+
 }

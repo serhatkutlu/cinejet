@@ -10,15 +10,10 @@ import com.msk.design_system.navigation.Screen
 import com.msk.feature.search.ui.search.SearchRoute
 import kotlinx.serialization.Serializable
 
-@Serializable
-object Search : Screen {
-    override val route: String
-        get() = "Search_Screen"
-}
 
 
 fun NavGraphBuilder.searchGraph(onBackClick: () -> Unit, navigateToDetail: (Int) -> Unit,modifier: Modifier) {
-    composable<Search> {
+    composable<SearchFlow.Search> {
         SearchRoute(
             modifier =modifier ,
             onBackClick,

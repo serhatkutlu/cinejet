@@ -22,7 +22,6 @@ dependencies {
     compileOnly(libs.kotlin.plugin)
     compileOnly(libs.ksp.plugin)
     compileOnly(libs.detekt.plugin)
-
 }
 gradlePlugin {
     plugins {

@@ -21,6 +21,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
                 defaultConfig {
                     minSdk = com.msk.convention.AppConfig.MIN_SDK
+                    testInstrumentationRunner="androidx.test.runner.AndroidJUnitRunner"
+
                 }
 
                 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
@@ -43,6 +45,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                     "testImplementation"(libs.findLibrary("junit").get())
                     "androidTestImplementation"(libs.findLibrary("androidx-junit").get())
                     "androidTestImplementation"(libs.findLibrary("androidx-espresso-core").get())
+                    "androidTestImplementation"(libs.findLibrary("kotlinx-coroutines-core").get())
+                    "androidTestImplementation"(libs.findLibrary("kotlinx-coroutines-test").get())
                 }
 
             }

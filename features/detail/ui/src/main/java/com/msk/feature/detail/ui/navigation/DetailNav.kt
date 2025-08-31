@@ -19,14 +19,16 @@ data class Detail(val id: Int) : Screen {
 }
 
 
-fun NavGraphBuilder.detailGraph(navigateToDetail: (Int) -> Unit, onNavigateBack: () -> Unit, modifier: Modifier=Modifier){
+fun NavGraphBuilder.detailGraph(navigateToDetail: (Int) -> Unit, onNavigateBack: () -> Unit, modifier: Modifier=Modifier,isCompact:Boolean=true){
     composable<Detail>{backStackEntry ->
         val id = backStackEntry.arguments?.getInt("id") ?: return@composable
+
         DetailRoute(
             id = id,
             modifier = modifier,
             navigateToDetail = navigateToDetail,
-            onBackPressed = onNavigateBack
+            onBackPressed = onNavigateBack,
+            isCompact = isCompact
         )
     }
 }

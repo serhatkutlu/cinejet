@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,12 +37,13 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun CineJetMovieCategoryRow(
+    modifier: Modifier=Modifier,
     mediaType: String,
     onSeeAllClick: () -> Unit,
     movies: List<Movie>,
     onMovieClick: (Movie) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
 
         Row(
             modifier = Modifier
@@ -83,10 +85,9 @@ fun CineJetMovieCategoryRow(
 
 
 @Composable
- fun MovieCard(movie: Movie, onClick: () -> Unit) {
+ fun MovieCard(modifier: Modifier=Modifier.size(140.dp, 200.dp),movie: Movie, onClick: () -> Unit) {
     Card(
-        modifier = Modifier
-            .size(140.dp, 200.dp)
+        modifier = modifier
             .clip(MaterialTheme.shapes.medium)
             .clickable { onClick() }
             ,
@@ -101,8 +102,9 @@ fun CineJetMovieCategoryRow(
                 contentDescription = movie.title
             )
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                  modifier = Modifier
+                    .align(Alignment.BottomStart)
+                      .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.75f)),

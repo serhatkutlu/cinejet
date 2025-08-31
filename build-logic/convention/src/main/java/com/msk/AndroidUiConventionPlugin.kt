@@ -19,6 +19,7 @@ class AndroidUiConventionPlugin:Plugin<Project> {
                "implementation"(libs.findLibrary("androidx.navigation.compose").get())
                 "implementation"(project(":core:design-system"))
 
+
             }
         }
     }
